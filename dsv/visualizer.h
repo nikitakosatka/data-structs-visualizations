@@ -94,7 +94,7 @@ public:
         Image icon;
         
         icon.loadFromFile(resourcePath() + "icon.png");
-        bgTexture.loadFromFile(resourcePath() + "main_background_anim.png");
+        bgTexture.loadFromFile(resourcePath() + "main_background.png");
         textTexture.loadFromFile(resourcePath() + "main_text.png");
         pressSomewhereTexture.loadFromFile(resourcePath() + "press_somewhere_to_start.png");
         
