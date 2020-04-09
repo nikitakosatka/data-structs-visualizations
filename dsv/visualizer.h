@@ -135,10 +135,7 @@ public:
     }
     
     void start() {
-        float acceleration = 15;
-        
-        for (float frame = 15; frame >= 1; frame -= 1) {
-            cout << frame << " " << acceleration << endl;
+        for (float frame = 30; frame >= 1; frame -= 1) {
             events();
             window->clear();
             
@@ -155,8 +152,6 @@ public:
             window->draw(text);
             window->draw(pressSomewhere);
             sleep(seconds(0.05));
-            
-            acceleration--;
             
             window->display();
         }
