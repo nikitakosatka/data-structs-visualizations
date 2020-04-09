@@ -1,18 +1,8 @@
 #ifndef visualizer_h
 #define visualizer_h
 
-#include <SFML/Graphics.hpp>
-#include <iostream>
-
-#include "ResourcePath.hpp"
-#include "AnimatedSprite/AnimatedSprite.hpp"
+#include "utils.h"
 #include "queue.h"
-
-#define WIDTH 1280
-#define HEIGHT 720
-
-using namespace sf;
-using namespace std;
 
 class Visualizer {
 private:

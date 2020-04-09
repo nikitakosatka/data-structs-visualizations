@@ -1,14 +1,9 @@
-#include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
-
-#include "ResourcePath.hpp"
+#include "dsv/utils.h"
 #include "dsv/visualizer.h"
 
-using namespace sf;
-
 int main() {
-    RenderWindow window(VideoMode(1280, 720), "Data Structs");
-    window.setFramerateLimit(60);
+    RenderWindow window(VideoMode(WIDTH, HEIGHT), "Data Structs");
+    window.setFramerateLimit(FRAMERATE);
 
     Visualizer visualizer(&window);
     visualizer.run();
