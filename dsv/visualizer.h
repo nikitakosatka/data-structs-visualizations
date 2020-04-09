@@ -107,7 +107,7 @@ public:
             backgroundAnimation.addFrame(IntRect(0, frame * HEIGHT, WIDTH, HEIGHT));
         }
         
-        background = AnimatedSprite(seconds(0.1), true, true);
+        background = AnimatedSprite(seconds(0.08), true, true);
         
         pressSomewhereAnimation.setSpriteSheet(pressSomewhereTexture);
         for (int frame = 0; frame < 15; frame++) {
