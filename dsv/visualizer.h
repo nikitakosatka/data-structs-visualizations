@@ -10,17 +10,19 @@ private:
     
     Texture bgTexture;
     Texture textTexture;
-    Texture startTexture;
     Texture pressSomewhereTexture;
     
-    Sprite text;
-    Sprite startButton;
+    AnimatedSprite text;
+    Animation textStatic;
+    Animation textAnimationEnd;
     
     Animation backgroundAnimation;
+    Animation backgroundAnimationEnd;
     AnimatedSprite background;
     
     Animation pressSomewhereAnimation;
     Animation pressSomewhereAnimationStart;
+    Animation pressSomewhereAnimationEnd;
     AnimatedSprite pressSomewhere;
     
     Clock frameClock;
@@ -52,6 +54,7 @@ public:
             }
             
             if (event.type == Event::MouseButtonPressed) {
+                end();
                 Queue queue(window);
                 queue.run();
             }
@@ -92,13 +95,21 @@ public:
     }
     
     void createSprites() {
+        
+        // Background animation init
         backgroundAnimation.setSpriteSheet(bgTexture);
         for (int frame = 0; frame < 22; frame++) {
             backgroundAnimation.addFrame(IntRect(0, frame * HEIGHT, WIDTH, HEIGHT));
         }
         
+        backgroundAnimationEnd.setSpriteSheet(bgTexture);
+        for (int frame = 0; frame < 5; frame++) {
+            backgroundAnimationEnd.addFrame(IntRect(WIDTH, frame * HEIGHT, WIDTH, HEIGHT));
+        }
+        
         background = AnimatedSprite(seconds(0.08), true, true);
         
+        // PressSomewhereToStart caption animation init
         pressSomewhereAnimation.setSpriteSheet(pressSomewhereTexture);
         for (int frame = 0; frame < 15; frame++) {
             pressSomewhereAnimation.addFrame(IntRect(0,
@@ -114,14 +125,32 @@ public:
                                                           pressSomewhereTexture.getSize().x,
                                                           pressSomewhereTexture.getSize().y / 20));
         }
+        
+        pressSomewhereAnimationEnd.setSpriteSheet(pressSomewhereTexture);
+        for (int frame = 19; frame >= 15; frame--) {
+            pressSomewhereAnimationEnd.addFrame(IntRect(0,
+                                                        frame * (pressSomewhereTexture.getSize().y / 20),
+                                                        pressSomewhereTexture.getSize().x,
+                                                        pressSomewhereTexture.getSize().y / 20));
+        }
+        
         pressSomewhere = AnimatedSprite(seconds(0.1), true, true);
         pressSomewhere.setPosition((WIDTH - pressSomewhereTexture.getSize().x) / 2, 500);
         
-        text = Sprite(textTexture);
-        text.setPosition((WIDTH - text.getTextureRect().width) / 2, 50);
+        // Title text animation init
+        text = AnimatedSprite(seconds(0.1), true, false);
         
-        startButton = Sprite(startTexture);
-        startButton.setPosition((WIDTH - startButton.getTextureRect().width) / 2, 450);
+        textStatic.setSpriteSheet(textTexture);
+        textStatic.addFrame(IntRect(0, textTexture.getSize().y / 5,
+                                    textTexture.getSize().x, textTexture.getSize().y / 5));
+        
+        textAnimationEnd.setSpriteSheet(textTexture);
+        for (int frame = 0; frame < 5; frame++) {
+            textAnimationEnd.addFrame(IntRect(0,
+                                             frame * (textTexture.getSize().y / 5),
+                                             textTexture.getSize().x,
+                                             textTexture.getSize().y / 5));
+        }
     }
     
     void start() {
@@ -134,9 +163,9 @@ public:
             background.play(backgroundAnimation);
             background.update(frameTime);
             
-            
+            text.play(textStatic);
             text.setScale(frame, frame);
-            text.setPosition((WIDTH - text.getTextureRect().width * frame) / 2, 50);
+            text.setPosition((WIDTH - textTexture.getSize().x * frame) / 2, 50);
             
             window->draw(background);
             window->draw(text);
@@ -146,7 +175,8 @@ public:
             window->display();
         }
         
-        pressSomewhere = AnimatedSprite(seconds(0.1), true, false);
+        pressSomewhere.setLooped(false);
+        
         for (int frame = 0; frame < 10; frame++) {
             events();
             window->clear();
@@ -169,9 +199,33 @@ public:
             window->display();
         }
         
-        pressSomewhere = AnimatedSprite(seconds(0.1), true, true);
-        pressSomewhere.setPosition((WIDTH - pressSomewhereTexture.getSize().x) / 2, 500);
+        pressSomewhere.setLooped(true);
+    }
+    
+    void end() {
+        background.setLooped(false);
+        pressSomewhere.setLooped(false);
         
+        for (int frame = 0; frame < 30; frame++) {
+            events();
+            window->clear();
+            
+            Time frameTime = frameClock.restart();
+            background.play(backgroundAnimationEnd);
+            background.update(frameTime);
+            
+            pressSomewhere.play(pressSomewhereAnimationEnd);
+            pressSomewhere.update(frameTime);
+            
+            text.play(textAnimationEnd);
+            text.update(frameTime);
+            
+            window->draw(background);
+            window->draw(text);
+            window->draw(pressSomewhere);
+            
+            window->display();
+        }
     }
 };
 

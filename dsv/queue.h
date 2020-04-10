@@ -18,15 +18,33 @@ public:
     }
     
     void run() {
-        std::cout << 1 << std::endl;
+        while (window->isOpen()) {
+            events();
+            update();
+        }
     }
     
     void events() {
-        
+        Event event;
+        while (window->pollEvent(event)) {
+            if (event.type == Event::Closed) {
+                window->close();
+            }
+            
+            if (event.type == Event::MouseButtonPressed) {
+                cout << 1 << endl;
+            }
+            
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
+                window->close();
+            }
+        }
     }
     
     void update() {
+        window->clear();
         
+        window->display();
     }
 };
 
