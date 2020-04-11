@@ -8,6 +8,8 @@ class Visualizer {
 private:
     RenderWindow *window;
     
+    Music music;
+    
     Texture bgTexture;
     Texture textTexture;
     Texture pressSomewhereTexture;
@@ -33,6 +35,7 @@ public:
         
         loadTextures();
         createSprites();
+        playMusic();
     }
     
     void run() {
@@ -226,6 +229,12 @@ public:
             
             window->display();
         }
+    }
+    
+    void playMusic() {
+        music.openFromFile(resourcePath() + "music.wav");
+        music.setVolume(10);
+        music.play();
     }
 };
 

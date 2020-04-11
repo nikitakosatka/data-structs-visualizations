@@ -21,6 +21,9 @@ private:
     
     Sprite text;
     
+    Sound sound;
+    SoundBuffer buffer;
+    
     Clock frameClock;
 
 public:
@@ -29,6 +32,8 @@ public:
         
         loadTextures();
         createSprites();
+        
+        loadSounds();
     }
     
     void run() {
@@ -69,6 +74,11 @@ public:
         window->draw(text);
         
         window->display();
+    }
+    
+    void loadSounds() {
+        buffer.loadFromFile(resourcePath() + "click.wav");
+        sound.setBuffer(buffer);
     }
     
     void loadTextures() {
