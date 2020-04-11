@@ -16,4 +16,48 @@
 using namespace std;
 using namespace sf;
 
+class Button {
+private:
+    RenderWindow *window;
+    
+    Texture texture;
+    Sprite button;
+
+public:
+    Button() {}
+    
+    Button(RenderWindow *window) {
+        this->window = window;
+    }
+    
+    Texture getTexture() {
+        return texture;
+    }
+    
+    void loadTexture(string path) {
+        if (!texture.loadFromFile(path)) {
+            cout << "Error loading texture" << endl;
+        }
+        
+        button = Sprite(texture);
+    }
+    
+    void loadTexture(Texture texture) {
+        this->texture = texture;
+        button = Sprite(texture);
+    }
+    
+    void setPosition(float x, float y) {
+        button.setPosition(x, y);
+    }
+    
+    void scale(float factorX, float factorY) {
+        button.scale(factorX, factorY);
+    }
+    
+    void draw() {
+        window->draw(button);
+    }
+};
+
 #endif /* utils_h */
