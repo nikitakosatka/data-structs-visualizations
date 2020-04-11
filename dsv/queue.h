@@ -9,12 +9,19 @@ class Queue {
 private:
     RenderWindow *window;
     
+    Texture bgTexture;
+    
     Animation backgroundAnimation;
     AnimatedSprite background;
+    
+    Clock frameClock;
 
 public:
     Queue(RenderWindow *window) {
         this->window = window;
+        
+        loadTextures();
+        createSprites();
     }
     
     void run() {
@@ -44,7 +51,27 @@ public:
     void update() {
         window->clear();
         
+        Time frameTime = frameClock.restart();
+        
+        background.play(backgroundAnimation);
+        background.update(frameTime);
+        
+        window->draw(background);
+        
         window->display();
+    }
+    
+    void loadTextures() {
+        bgTexture.loadFromFile(resourcePath() + "queue_background.png");
+    }
+    
+    void createSprites() {
+        backgroundAnimation.setSpriteSheet(bgTexture);
+        for (int frame = 0; frame < 22; frame++) {
+            backgroundAnimation.addFrame(IntRect(0, frame * HEIGHT, WIDTH, HEIGHT));
+        }
+        
+        background = AnimatedSprite(seconds(0.1), true, true);
     }
 };
 
