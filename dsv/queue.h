@@ -21,10 +21,14 @@ private:
     
     Sprite text;
     
-    Sound sound;
+    Sound click;
     SoundBuffer buffer;
     
     Clock frameClock;
+    
+    Button startBtn;
+    Button infoBtn;
+    Button nextBtn;
 
 public:
     Queue(RenderWindow *window) {
@@ -53,7 +57,13 @@ public:
             }
             
             if (event.type == Event::MouseButtonPressed) {
-                cout << 1 << endl;
+                if (startBtn.isContainMousePos()) {
+                    click.play();
+                } else if (infoBtn.isContainMousePos()) {
+                    click.play();
+                } else if (nextBtn.isContainMousePos()) {
+                    click.play();
+                }
             }
             
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
@@ -73,12 +83,20 @@ public:
         window->draw(background);
         window->draw(text);
         
+        startBtn.scaleIfMouseContain((WIDTH - startBtn.getTexture().getSize().x) / 2, 350);
+        infoBtn.scaleIfMouseContain((WIDTH - infoBtn.getTexture().getSize().x) / 2, 450);
+        nextBtn.scaleIfMouseContain((WIDTH - nextBtn.getTexture().getSize().x) / 2, 550);
+        
+        startBtn.draw();
+        infoBtn.draw();
+        nextBtn.draw();
+        
         window->display();
     }
     
     void loadSounds() {
         buffer.loadFromFile(resourcePath() + "click.wav");
-        sound.setBuffer(buffer);
+        click.setBuffer(buffer);
     }
     
     void loadTextures() {
@@ -88,6 +106,8 @@ public:
     }
     
     void createSprites() {
+        
+        // Background init
         backgroundAnimation.setSpriteSheet(bgTexture);
         for (int frame = 0; frame < 22; frame++) {
             backgroundAnimation.addFrame(IntRect(0, frame * HEIGHT, WIDTH, HEIGHT));
@@ -95,6 +115,7 @@ public:
         
         background = AnimatedSprite(seconds(0.1), true, true);
         
+        // Shading init
         shadingAnimation.setSpriteSheet(shadingTexture);
         for (int frame = 0; frame < 5; frame++) {
             shadingAnimation.addFrame(IntRect(0, frame * HEIGHT, WIDTH, HEIGHT));
@@ -102,8 +123,22 @@ public:
         
         shading = AnimatedSprite(seconds(0.1), true, false);
         
+        // Title text init
         text = Sprite(textTexture);
         text.setPosition((WIDTH - text.getTextureRect().width) / 2, 50);
+        
+        // Buttons init
+        startBtn = Button(window);
+        startBtn.loadTexture(resourcePath() + "queue_start.png");
+        startBtn.setPosition((WIDTH - startBtn.getTexture().getSize().x) / 2, 350);
+        
+        infoBtn = Button(window);
+        infoBtn.loadTexture(resourcePath() + "queue_info.png");
+        infoBtn.setPosition((WIDTH - infoBtn.getTexture().getSize().x) / 2, 450);
+        
+        nextBtn = Button(window);
+        nextBtn.loadTexture(resourcePath() + "queue_next.png");
+        nextBtn.setPosition((WIDTH - nextBtn.getTexture().getSize().x) / 2, 550);
     }
     
     void start() {
@@ -122,6 +157,10 @@ public:
             window->draw(background);
             window->draw(text);
             window->draw(shading);
+            
+            startBtn.draw();
+            infoBtn.draw();
+            nextBtn.draw();
             
             window->display();
         }
