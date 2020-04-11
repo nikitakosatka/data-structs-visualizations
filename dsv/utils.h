@@ -34,6 +34,10 @@ public:
         return texture;
     }
     
+    bool isContainMousePos() {
+        return (button.getGlobalBounds().contains(Mouse::getPosition(*window).x, Mouse::getPosition(*window).y));
+    }
+ 
     void loadTexture(string path) {
         if (!texture.loadFromFile(path)) {
             cout << "Error loading texture" << endl;
@@ -51,12 +55,22 @@ public:
         button.setPosition(x, y);
     }
     
-    void scale(float factorX, float factorY) {
-        button.scale(factorX, factorY);
+    void setScale(float factorX, float factorY) {
+        button.setScale(factorX, factorY);
     }
     
     void draw() {
         window->draw(button);
+    }
+    
+    void scaleIfMouseContain(float x, float y) {
+        if (isContainMousePos()) {
+            setScale(1.1, 1.1);
+            setPosition((WIDTH - getTexture().getSize().x * 1.1) / 2, y);
+        } else {
+            setScale(1, 1);
+            setPosition(x, y);
+        }
     }
 };
 
