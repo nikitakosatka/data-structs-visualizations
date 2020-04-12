@@ -41,7 +41,7 @@ public:
     }
     
     void run() {
-        start();
+        begin();
         
         while (window->isOpen()) {
             events();
@@ -59,6 +59,7 @@ public:
             if (event.type == Event::MouseButtonPressed) {
                 if (startBtn.isContainMousePos()) {
                     click.play();
+                    
                 } else if (infoBtn.isContainMousePos()) {
                     click.play();
                 } else if (nextBtn.isContainMousePos()) {
@@ -141,7 +142,7 @@ public:
         nextBtn.setPosition((WIDTH - nextBtn.getTexture().getSize().x) / 2, 550);
     }
     
-    void start() {
+    void begin() {
         for (int frame = 0; frame < 30; frame++) {
             events();
             window->clear();
