@@ -22,6 +22,9 @@ private:
     
     Texture texture;
     Sprite button;
+    
+    float x;
+    float y;
 
 public:
     Button() {}
@@ -36,6 +39,14 @@ public:
     
     bool isContainMousePos() {
         return (button.getGlobalBounds().contains(Mouse::getPosition(*window).x, Mouse::getPosition(*window).y));
+    }
+    
+    float getPositionX() {
+        return x;
+    }
+    
+    float getPositionY() {
+        return y;
     }
  
     void loadTexture(string path) {
@@ -52,7 +63,14 @@ public:
     }
     
     void setPosition(float x, float y) {
+        this->x = x;
+        this->y = y;
         button.setPosition(x, y);
+    }
+    
+    void setDefaultPos(float x, float y) {
+        this->x = x;
+        this->y = y;
     }
     
     void setScale(float factorX, float factorY) {
@@ -60,13 +78,15 @@ public:
     }
     
     void draw() {
+        scaleIfMouseContain(x, y);
         window->draw(button);
     }
     
     void scaleIfMouseContain(float x, float y) {
         if (isContainMousePos()) {
             setScale(1.1, 1.1);
-            setPosition((WIDTH - getTexture().getSize().x * 1.1) / 2, y);
+            setPosition(x - 15, y);
+            setDefaultPos(x, y);
         } else {
             setScale(1, 1);
             setPosition(x, y);
