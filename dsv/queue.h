@@ -9,6 +9,8 @@ class Queue {
 private:
     RenderWindow *window;
     
+    bool isStarted = false;
+    
     Texture bgTexture;
     Texture textTexture;
     Texture shadingTexture;
@@ -29,6 +31,10 @@ private:
     Button startBtn;
     Button infoBtn;
     Button nextBtn;
+    Button pushBtn;
+    Button popBtn;
+    Button peekBtn;
+    Button arrowsBtn;
 
 public:
     Queue(RenderWindow *window) {
@@ -59,7 +65,7 @@ public:
             if (event.type == Event::MouseButtonPressed) {
                 if (startBtn.isContainMousePos()) {
                     click.play();
-                    
+                    isStarted = true;
                 } else if (infoBtn.isContainMousePos()) {
                     click.play();
                 } else if (nextBtn.isContainMousePos()) {
@@ -82,15 +88,16 @@ public:
         background.update(frameTime);
         
         window->draw(background);
-        window->draw(text);
         
-        startBtn.scaleIfMouseContain((WIDTH - startBtn.getTexture().getSize().x) / 2, 350);
-        infoBtn.scaleIfMouseContain((WIDTH - infoBtn.getTexture().getSize().x) / 2, 450);
-        nextBtn.scaleIfMouseContain((WIDTH - nextBtn.getTexture().getSize().x) / 2, 550);
-        
-        startBtn.draw();
-        infoBtn.draw();
-        nextBtn.draw();
+        if (isStarted) {
+            start();
+        } else {
+            window->draw(text);
+            
+            startBtn.draw();
+            infoBtn.draw();
+            nextBtn.draw();
+        }
         
         window->display();
     }
@@ -140,6 +147,22 @@ public:
         nextBtn = Button(window);
         nextBtn.loadTexture(resourcePath() + "queue_next.png");
         nextBtn.setPosition((WIDTH - nextBtn.getTexture().getSize().x) / 2, 550);
+        
+        pushBtn = Button(window);
+        pushBtn.loadTexture(resourcePath() + "queue_push.png");
+        pushBtn.setPosition((WIDTH - pushBtn.getTexture().getSize().x) / 2 + pushBtn.getTexture().getSize().x / 2 + 20, 50);
+        
+        popBtn = Button(window);
+        popBtn.loadTexture(resourcePath() + "queue_pop.png");
+        popBtn.setPosition((WIDTH - popBtn.getTexture().getSize().x) / 2 - popBtn.getTexture().getSize().x / 2 - 20, 50);
+        
+        peekBtn = Button(window);
+        peekBtn.loadTexture(resourcePath() + "queue_peek.png");
+        peekBtn.setPosition((WIDTH - peekBtn.getTexture().getSize().x) / 2, 550);
+        
+        arrowsBtn = Button(window);
+        arrowsBtn.loadTexture(resourcePath() + "queue_arrows.png");
+        arrowsBtn.setPosition((WIDTH - arrowsBtn.getTexture().getSize().x) / 2, 550);
     }
     
     void begin() {
@@ -165,6 +188,11 @@ public:
             
             window->display();
         }
+    }
+    
+    void start() {
+        popBtn.draw();
+        pushBtn.draw();
     }
 };
 
