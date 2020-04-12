@@ -234,6 +234,7 @@ public:
     void playMusic() {
         music.openFromFile(resourcePath() + "music.wav");
         music.setVolume(10);
+        music.setLoop(true);
         music.play();
     }
 };
