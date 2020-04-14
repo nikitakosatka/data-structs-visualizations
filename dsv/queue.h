@@ -35,6 +35,7 @@ private:
     Button popBtn;
     Button peekBtn;
     Button arrowsBtn;
+    Button xBtn;
 
 public:
     Queue(RenderWindow *window) {
@@ -63,13 +64,24 @@ public:
             }
             
             if (event.type == Event::MouseButtonPressed) {
-                if (startBtn.isContainMousePos()) {
-                    click.play();
-                    isStarted = true;
-                } else if (infoBtn.isContainMousePos()) {
-                    click.play();
-                } else if (nextBtn.isContainMousePos()) {
-                    click.play();
+                if (isStarted) {
+                    if (xBtn.isContainMousePos()) {
+                        click.play();
+                        isStarted = false;
+                    } else if (pushBtn.isContainMousePos()) {
+                        click.play();
+                    } else if (popBtn.isContainMousePos()) {
+                        click.play();
+                    }
+                } else {
+                    if (startBtn.isContainMousePos()) {
+                        click.play();
+                        isStarted = true;
+                    } else if (infoBtn.isContainMousePos()) {
+                        click.play();
+                    } else if (nextBtn.isContainMousePos()) {
+                        click.play();
+                    }
                 }
             }
             
@@ -163,6 +175,11 @@ public:
         arrowsBtn = Button(window);
         arrowsBtn.loadTexture(resourcePath() + "queue_arrows.png");
         arrowsBtn.setPosition((WIDTH - arrowsBtn.getTexture().getSize().x) / 2, 550);
+        
+        xBtn = Button(window);
+        xBtn.loadTexture(resourcePath() + "queue_num_field.png");
+        xBtn.setPosition(50, 50);
+        xBtn.setText("x");
     }
     
     void begin() {
@@ -193,6 +210,7 @@ public:
     void start() {
         popBtn.draw();
         pushBtn.draw();
+        xBtn.draw();
     }
 };
 

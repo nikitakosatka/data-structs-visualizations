@@ -85,7 +85,7 @@ public:
     void scaleIfMouseContain(float x, float y) {
         if (isContainMousePos()) {
             setScale(1.1, 1.1);
-            setPosition(x - 15, y);
+            setPosition(x - texture.getSize().x * 0.05, y);
             setDefaultPos(x, y);
         } else {
             setScale(1, 1);
