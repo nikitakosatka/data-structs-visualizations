@@ -22,15 +22,23 @@ private:
     
     Texture texture;
     Sprite button;
+    Text text;
+    Font font;
     
     float x;
     float y;
 
 public:
-    Button() {}
+    Button() {
+        //TODO: Текст на кнопке
+//        font.loadFromFile(resourcePath() + "04b.ttf");
+//        text = Text("", font, 59);
+    }
     
     Button(RenderWindow *window) {
         this->window = window;
+//        font.loadFromFile(resourcePath() + "04b.ttf");
+//        text = Text("", font, 59);
     }
     
     Texture getTexture() {
@@ -80,6 +88,7 @@ public:
     void draw() {
         scaleIfMouseContain(x, y);
         window->draw(button);
+        window->draw(text);
     }
     
     void scaleIfMouseContain(float x, float y) {
@@ -91,6 +100,11 @@ public:
             setScale(1, 1);
             setPosition(x, y);
         }
+    }
+    
+    void setText(string text) {
+        this->text.setString(text);
+        this->text.setPosition(x, y);
     }
 };
 
