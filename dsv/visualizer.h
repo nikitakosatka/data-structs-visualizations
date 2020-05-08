@@ -3,6 +3,7 @@
 
 #include "utils.h"
 #include "queue.h"
+#include "tree.h"
 
 class Visualizer {
 private:
@@ -28,6 +29,9 @@ private:
     AnimatedSprite pressSomewhere;
     
     Clock frameClock;
+    
+    Queue *queue;
+    Tree *tree;
     
 public:
     Visualizer(RenderWindow *window) {
@@ -58,8 +62,18 @@ public:
             
             if (event.type == Event::MouseButtonPressed) {
                 end();
-                Queue queue(window);
-                queue.run();
+                
+                while (true) {
+                    queue = new Queue(window);
+                    queue->run();
+                    delete queue;
+                    
+                    tree = new Tree(window);
+                    tree->run();
+                    delete tree;
+                }
+                
+                window->close();
             }
             
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
