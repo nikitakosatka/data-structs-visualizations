@@ -13,6 +13,7 @@ class Queue {
 private:
     RenderWindow *window;
     
+    bool isRunning = true;
     bool isStarted = false;
     bool isInfo = false;
     int elementsNum = 0;
@@ -63,10 +64,14 @@ public:
         loadSounds();
     }
     
+    Queue() {
+        // Default constructor
+    }
+    
     void run() {
         begin();
         
-        while (window->isOpen()) {
+        while (window->isOpen() && isRunning) {
             events();
             update();
         }
@@ -108,6 +113,7 @@ public:
                         isInfo = true;
                     } else if (nextBtn.isContainMousePos()) {
                         click.play();
+                        isRunning = false;
                     }
                 }
             }
