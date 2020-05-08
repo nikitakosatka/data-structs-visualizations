@@ -181,7 +181,7 @@ public:
         arrowsBtn.setPosition((WIDTH - arrowsBtn.getTexture().getSize().x) / 2, 550);
         
         xBtn = Button(window);
-        xBtn.loadTexture(resourcePath() + "queue_num_field.png");
+        xBtn.loadTexture(resourcePath() + "queue_x.png");
         xBtn.setPosition(50, 50);
         xBtn.setText("x");
     }
