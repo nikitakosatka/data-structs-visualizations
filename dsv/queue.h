@@ -86,8 +86,18 @@ public:
                         isStarted = false;
                     } else if (pushBtn.isContainMousePos()) {
                         click.play();
+                        push();
                     } else if (popBtn.isContainMousePos()) {
                         click.play();
+                        pop();
+                    } else if (peekBtn.isContainMousePos()) {
+                        click.play();
+                        peek();
+                    }
+                } else if (isInfo) {
+                    if (xBtn.isContainMousePos()) {
+                        click.play();
+                        isInfo = false;
                     }
                 } else {
                     if (startBtn.isContainMousePos()) {
@@ -95,6 +105,7 @@ public:
                         isStarted = true;
                     } else if (infoBtn.isContainMousePos()) {
                         click.play();
+                        isInfo = true;
                     } else if (nextBtn.isContainMousePos()) {
                         click.play();
                     }
@@ -214,21 +225,17 @@ public:
         nextBtn.loadTexture(resourcePath() + "queue_next.png");
         nextBtn.setPosition((WIDTH - nextBtn.getTexture().getSize().x) / 2, 550);
         
-        pushBtn = Button(window);
-        pushBtn.loadTexture(resourcePath() + "queue_push.png");
-        pushBtn.setPosition((WIDTH - pushBtn.getTexture().getSize().x) / 2 + pushBtn.getTexture().getSize().x / 2 + 20, 50);
-        
         popBtn = Button(window);
         popBtn.loadTexture(resourcePath() + "queue_pop.png");
-        popBtn.setPosition((WIDTH - popBtn.getTexture().getSize().x) / 2 - popBtn.getTexture().getSize().x / 2 - 20, 50);
+        popBtn.setPosition((WIDTH / 3 / 2) - 40, 50);
+        
+        pushBtn = Button(window);
+        pushBtn.loadTexture(resourcePath() + "queue_push.png");
+        pushBtn.setPosition((WIDTH - pushBtn.getTexture().getSize().x) / 2, 50);
         
         peekBtn = Button(window);
         peekBtn.loadTexture(resourcePath() + "queue_peek.png");
-        peekBtn.setPosition((WIDTH - peekBtn.getTexture().getSize().x) / 2, 550);
-        
-        arrowsBtn = Button(window);
-        arrowsBtn.loadTexture(resourcePath() + "queue_arrows.png");
-        arrowsBtn.setPosition((WIDTH - arrowsBtn.getTexture().getSize().x) / 2, 550);
+        peekBtn.setPosition(WIDTH / 3 * 2 - 45, 50);
         
         xBtn = Button(window);
         xBtn.loadTexture(resourcePath() + "queue_x.png");
@@ -264,7 +271,123 @@ public:
     void start() {
         popBtn.draw();
         pushBtn.draw();
+        peekBtn.draw();
         xBtn.draw();
+    }
+    
+    void info() {
+        window->draw(infoText);
+        xBtn.draw();
+    }
+    
+    void push() {
+        if (elementsNum < MAX_ELEMENTS) {
+            elementsNum++;
+        
+            for (int x = WIDTH; x > ELEMENT_X + 120 * (elementsNum - 1); x -= 4) {
+                events();
+                window->clear();
+                
+                Time frameTime = frameClock.restart();
+                
+                background.play(backgroundAnimation);
+                background.update(frameTime);
+                
+                elements[elementsNum - 1].setPosition(x, ELEMENT_Y);
+                
+                window->draw(background);
+                
+                popBtn.draw();
+                pushBtn.draw();
+                peekBtn.draw();
+                xBtn.draw();
+                
+                for (int el = 0; el < elementsNum; el++) {
+                    if (el == elementsNum - 1) {
+                        elements[el].play(elementRunAnimation);
+                    } else {
+                        elements[el].play(elementStayAnimation);
+                    }
+                    elements[el].update(frameTime);
+                    window->draw(elements[el]);
+                }
+                
+                window->draw(wall);
+                
+                window->display();
+            }
+        }
+    }
+    
+    void pop() {
+        if (elementsNum > 0) {
+            elementsNum--;
+            
+            for (int x = ELEMENT_X; x > ELEMENT_X - 120 ; x -= 2) {
+                events();
+                window->clear();
+                
+                Time frameTime = frameClock.restart();
+                
+                background.play(backgroundAnimation);
+                background.update(frameTime);
+                
+                for (int el = 0; el < elementsNum + 1; el++) {
+                    elements[el].setPosition(x + 120 * el, ELEMENT_Y);
+                }
+                
+                window->draw(background);
+                
+                popBtn.draw();
+                pushBtn.draw();
+                peekBtn.draw();
+                xBtn.draw();
+                
+                for (int el = 0; el < elementsNum + 1; el++) {
+                    elements[el].play(elementRunAnimation);
+                    elements[el].update(frameTime);
+                    window->draw(elements[el]);
+                }
+                
+                window->draw(wall);
+                
+                window->display();
+            }
+        }
+    }
+    
+    void peek() {
+        for (int frame = 0; frame < 30; frame++) {
+            events();
+            window->clear();
+            
+            Time frameTime = frameClock.restart();
+            
+            background.play(backgroundAnimation);
+            background.update(frameTime);
+            
+            window->draw(background);
+            
+            popBtn.draw();
+            pushBtn.draw();
+            peekBtn.draw();
+            xBtn.draw();
+            
+            for (int el = 0; el < elementsNum; el++) {
+                if (el == 0) {
+                    elements[el].play(elementRunAnimation);
+                } else {
+                    elements[el].play(elementStayAnimation);
+                }
+                
+                elements[el].update(frameTime);
+                window->draw(elements[el]);
+            }
+            
+            window->draw(wall);
+            
+            window->display();
+        }
     }
 };
 
