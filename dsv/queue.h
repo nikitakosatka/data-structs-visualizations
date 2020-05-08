@@ -20,6 +20,9 @@ private:
     Texture bgTexture;
     Texture textTexture;
     Texture shadingTexture;
+    Texture elementTexture;
+    Texture wallTexture;
+    Texture infoTextTexture;
     
     Animation backgroundAnimation;
     AnimatedSprite background;
@@ -33,6 +36,8 @@ private:
     AnimatedSprite elements[MAX_ELEMENTS];
     
     Sprite text;
+    Sprite wall;
+    Sprite infoText;
     
     Sound click;
     SoundBuffer buffer;
@@ -143,6 +148,9 @@ public:
         shadingTexture.loadFromFile(resourcePath() + "shading.png");
         bgTexture.loadFromFile(resourcePath() + "queue_background.png");
         textTexture.loadFromFile(resourcePath() + "queue_text.png");
+        elementTexture.loadFromFile(resourcePath() + "queue_red.png");
+        wallTexture.loadFromFile(resourcePath() + "queue_wall.png");
+        infoTextTexture.loadFromFile(resourcePath() + "queue_info_text.png");
     }
     
     void createSprites() {
@@ -182,6 +190,14 @@ public:
         // Title text init
         text = Sprite(textTexture);
         text.setPosition((WIDTH - text.getTextureRect().width) / 2, 50);
+        
+        // Wall init
+        wall = Sprite(wallTexture);
+        wall.setPosition(274, 272);
+        
+        // Info text init
+        infoText = Sprite(infoTextTexture);
+        infoText.setPosition((WIDTH - infoTextTexture.getSize().x) / 2, (HEIGHT - infoTextTexture.getSize().y) / 2);
         
         // Buttons init
         startBtn = Button(window);
