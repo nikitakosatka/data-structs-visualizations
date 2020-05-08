@@ -227,7 +227,7 @@ public:
         
         popBtn = Button(window);
         popBtn.loadTexture(resourcePath() + "queue_pop.png");
-        popBtn.setPosition((WIDTH / 3 / 2) - 40, 50);
+        popBtn.setPosition((WIDTH / 3 / 2) - 45, 50);
         
         pushBtn = Button(window);
         pushBtn.loadTexture(resourcePath() + "queue_push.png");
@@ -235,7 +235,7 @@ public:
         
         peekBtn = Button(window);
         peekBtn.loadTexture(resourcePath() + "queue_peek.png");
-        peekBtn.setPosition(WIDTH / 3 * 2 - 45, 50);
+        peekBtn.setPosition(WIDTH / 3 * 2 - 40, 50);
         
         xBtn = Button(window);
         xBtn.loadTexture(resourcePath() + "queue_x.png");
