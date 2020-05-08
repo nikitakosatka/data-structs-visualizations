@@ -128,6 +128,8 @@ public:
         
         if (isStarted) {
             start();
+        } else if (isInfo) {
+            info();
         } else {
             window->draw(text);
             
