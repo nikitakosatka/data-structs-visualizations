@@ -14,6 +14,8 @@ private:
     RenderWindow *window;
     
     bool isStarted = false;
+    bool isInfo = false;
+    int elementsNum = 0;
     
     Texture bgTexture;
     Texture textTexture;
@@ -24,6 +26,11 @@ private:
     
     Animation shadingAnimation;
     AnimatedSprite shading;
+    
+    Animation elementStayAnimation;
+    Animation elementRunAnimation;
+    AnimatedSprite element;
+    AnimatedSprite elements[MAX_ELEMENTS];
     
     Sprite text;
     
@@ -105,6 +112,15 @@ public:
         
         window->draw(background);
         
+        for (int el = 0; el < elementsNum; el++) {
+            elements[el].setPosition(el * 120 + ELEMENT_X, ELEMENT_Y);
+            elements[el].play(elementStayAnimation);
+            elements[el].update(frameTime);
+            window->draw(elements[el]);
+        }
+        
+        window->draw(wall);
+        
         if (isStarted) {
             start();
         } else {
@@ -146,6 +162,22 @@ public:
         }
         
         shading = AnimatedSprite(seconds(0.1), true, false);
+        
+        // Elements init
+        elementRunAnimation.setSpriteSheet(elementTexture);
+        for (int frame = 0; frame < 4; frame++) {
+            elementRunAnimation.addFrame(IntRect(frame * elementTexture.getSize().x / 4, 0,
+                                                 elementTexture.getSize().x / 4, elementTexture.getSize().y));
+        }
+        
+        elementStayAnimation.setSpriteSheet(elementTexture);
+        elementStayAnimation.addFrame(IntRect(0, 0,
+                                              elementTexture.getSize().x / 4, elementTexture.getSize().y));
+        
+        for (int el = 0; el < MAX_ELEMENTS; el++) {
+            elements[el] = AnimatedSprite(seconds(0.1), true, true);
+            elements[el].setPosition(el * 120 + ELEMENT_X, ELEMENT_Y);
+        }
         
         // Title text init
         text = Sprite(textTexture);
