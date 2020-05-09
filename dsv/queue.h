@@ -3,7 +3,7 @@
 
 #include "utils.h"
 
-#define MAX_ELEMENTS 16
+#define MAX_ELEMENTS 64
 #define ELEMENT_X 570
 #define ELEMENT_Y 415
 
