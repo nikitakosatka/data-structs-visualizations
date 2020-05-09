@@ -9,6 +9,9 @@ class Visualizer {
 private:
     RenderWindow *window;
     
+    bool running = false;
+    bool isStarted = false;
+    
     Music music;
     
     Texture bgTexture;
@@ -57,47 +60,51 @@ public:
         Event event;
         while (window->pollEvent(event)) {
             if (event.type == Event::Closed) {
+                running = false;
                 window->close();
             }
             
             if (event.type == Event::MouseButtonPressed) {
-                end();
-                
-                while (true) {
-                    queue = new Queue(window);
-                    queue->run();
-                    delete queue;
-                    
-                    tree = new Tree(window);
-                    tree->run();
-                    delete tree;
+                if (isStarted) {
+                    running = true;
+                    end();
                 }
-                
-                window->close();
-            }
-            
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
-                window->close();
             }
         }
     }
     
+    void loop() {
+        events();
+        queue = new Queue(window);
+        queue->run();
+        delete queue;
+        
+        tree = new Tree(window);
+        tree->run();
+        delete tree;
+    }
+    
     void update() {
-        window->clear();
-        
-        Time frameTime = frameClock.restart();
-        
-        background.play(backgroundAnimation);
-        background.update(frameTime);
-        
-        pressSomewhere.play(pressSomewhereAnimation);
-        pressSomewhere.update(frameTime);
-        
-        window->draw(background);
-        window->draw(text);
-        window->draw(pressSomewhere);
-        
-        window->display();
+        if (running) {
+            loop();
+            
+        } else {
+            window->clear();
+            
+            Time frameTime = frameClock.restart();
+            
+            background.play(backgroundAnimation);
+            background.update(frameTime);
+            
+            pressSomewhere.play(pressSomewhereAnimation);
+            pressSomewhere.update(frameTime);
+            
+            window->draw(background);
+            window->draw(text);
+            window->draw(pressSomewhere);
+            
+            window->display();
+        }
     }
     
     void loadTextures() {
@@ -217,6 +224,8 @@ public:
         }
         
         pressSomewhere.setLooped(true);
+        
+        isStarted = true;
     }
     
     void end() {
