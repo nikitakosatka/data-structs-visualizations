@@ -3,6 +3,7 @@
 
 #include "utils.h"
 #include "queue.h"
+#include "stack.h"
 #include "tree.h"
 
 class Visualizer {
@@ -34,6 +35,7 @@ private:
     Clock frameClock;
     
     Queue *queue;
+    Stack *stack;
     Tree *tree;
     
 public:
@@ -84,6 +86,10 @@ public:
         tree = new Tree(window);
         tree->run();
         delete tree;
+        
+        stack = new Stack(window);
+        stack->run();
+        delete stack;
     }
     
     void update() {
