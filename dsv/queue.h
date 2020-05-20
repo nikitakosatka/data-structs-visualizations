@@ -16,6 +16,7 @@ private:
     bool isRunning = true;
     bool isStarted = false;
     bool isInfo = false;
+    bool isAnimation = false;
     int elementsNum = 0;
     
     Texture bgTexture;
@@ -88,10 +89,10 @@ public:
                         isStarted = false;
                     } else if (pushBtn.isContainMousePos()) {
                         click.play();
-                        push();
+                        (!isAnimation) ? push() : pass; // if animation doesn't occur, push, else do nothing
                     } else if (popBtn.isContainMousePos()) {
                         click.play();
-                        pop();
+                        (!isAnimation) ? pop() : pass; // if animation doesn't occur, pop, else do nothing
                     } else if (peekBtn.isContainMousePos()) {
                         click.play();
                         peek();
@@ -283,6 +284,8 @@ public:
     }
     
     void push() {
+        isAnimation = true;
+        
         if (elementsNum < MAX_ELEMENTS) {
             elementsNum++;
         
@@ -299,10 +302,7 @@ public:
                 
                 window->draw(background);
                 
-                popBtn.draw();
-                pushBtn.draw();
-                peekBtn.draw();
-                xBtn.draw();
+                start(); // draw buttons
                 
                 for (int el = 0; el < elementsNum; el++) {
                     if (el == elementsNum - 1) {
@@ -319,9 +319,13 @@ public:
                 window->display();
             }
         }
+        
+        isAnimation = false;
     }
     
     void pop() {
+        bool isAnimation = true;
+        
         if (elementsNum > 0) {
             elementsNum--;
             
@@ -340,10 +344,7 @@ public:
                 
                 window->draw(background);
                 
-                popBtn.draw();
-                pushBtn.draw();
-                peekBtn.draw();
-                xBtn.draw();
+                start(); // draw buttons
                 
                 for (int el = 0; el < elementsNum + 1; el++) {
                     elements[el].play(elementRunAnimation);
@@ -356,6 +357,8 @@ public:
                 window->display();
             }
         }
+        
+        isAnimation = false;
     }
     
     void peek() {
@@ -370,10 +373,7 @@ public:
             
             window->draw(background);
             
-            popBtn.draw();
-            pushBtn.draw();
-            peekBtn.draw();
-            xBtn.draw();
+            start(); // draw buttons
             
             for (int el = 0; el < elementsNum; el++) {
                 if (el == 0) {
