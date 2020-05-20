@@ -73,8 +73,10 @@ public:
         }
     }
     
+    // All structures are created here
     void loop() {
         events();
+        
         queue = new Queue(window);
         queue->run();
         delete queue;

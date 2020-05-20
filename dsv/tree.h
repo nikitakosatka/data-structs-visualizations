@@ -12,9 +12,7 @@ public:
         this->window = window;
     }
     
-    Tree() {
-        // Default constructor
-    }
+    Tree() = default; // Default constructor
     
     void run() {
         

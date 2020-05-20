@@ -33,7 +33,6 @@ private:
     
     Animation elementStayAnimation;
     Animation elementRunAnimation;
-    AnimatedSprite element;
     AnimatedSprite elements[MAX_ELEMENTS];
     
     Sprite text;
@@ -64,9 +63,7 @@ public:
         loadSounds();
     }
     
-    Queue() {
-        // Default constructor
-    }
+    Queue() = default; // Default constructor
     
     void run() {
         begin();
@@ -246,7 +243,6 @@ public:
         xBtn = Button(window);
         xBtn.loadTexture(resourcePath() + "queue_x.png");
         xBtn.setPosition(50, 50);
-        xBtn.setText("x");
     }
     
     void begin() {
