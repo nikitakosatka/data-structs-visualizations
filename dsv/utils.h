@@ -9,6 +9,8 @@
 #include "AnimatedSprite/Animation.hpp"
 #include "AnimatedSprite/AnimatedSprite.hpp"
 
+#define pass (void)0
+
 #define WIDTH 1280
 #define HEIGHT 720
 #define FRAMERATE 60
