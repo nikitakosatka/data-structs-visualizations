@@ -12,6 +12,7 @@ private:
     
     bool running = false;
     bool isStarted = false;
+    bool isFirstRunning = true;
     
     Music music;
     
@@ -79,17 +80,19 @@ public:
     void loop() {
         events();
         
-        queue = new Queue(window);
+        queue = new Queue(window, isFirstRunning);
         queue->run();
         delete queue;
+        
+        stack = new Stack(window);
+        stack->run();
+        delete stack;
         
         tree = new Tree(window);
         tree->run();
         delete tree;
         
-        stack = new Stack(window);
-        stack->run();
-        delete stack;
+        isFirstRunning = false;
     }
     
     void update() {
