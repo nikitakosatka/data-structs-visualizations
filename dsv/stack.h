@@ -288,7 +288,7 @@ public:
         if (elementsNum > 0) {
             elementsNum--;
             
-            for (int y = 660 - (elementsNum + 1) * elements[elementsNum].getTexture()->getSize().y; y > 0; y -= 12) {
+            for (int y = 660 - (elementsNum + 1) * 24; y > 0; y -= 12) {
                 events();
                 window->clear();
                 
@@ -317,7 +317,29 @@ public:
     }
     
     void peek() {
-        
+        for (int frame = 0; frame < 30; frame += 1) {
+            events();
+            window->clear();
+            
+            Time frameTime = frameClock.restart();
+            
+            background.play(backgroundAnimation);
+            background.update(frameTime);
+            
+            elements[elementsNum].rotate(12);
+            
+            window->draw(background);
+            
+            for (int el = 0; el < elementsNum + 2; el++) {
+                window->draw(elements[el]);
+            }
+            
+            start(); // draw buttons
+            
+            window->draw(wall);
+            
+            window->display();
+        }
     }
 };
 
