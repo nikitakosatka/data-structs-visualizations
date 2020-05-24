@@ -31,16 +31,10 @@ private:
     float y;
 
 public:
-    Button() {
-        //TODO: Текст на кнопке
-//        font.loadFromFile(resourcePath() + "04b.ttf");
-//        text = Text("", font, 59);
-    }
+    Button() = default; // Default constructor
     
     Button(RenderWindow *window) {
         this->window = window;
-//        font.loadFromFile(resourcePath() + "04b.ttf");
-//        text = Text("", font, 59);
     }
     
     Texture getTexture() {

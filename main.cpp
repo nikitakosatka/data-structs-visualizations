@@ -1,4 +1,3 @@
-#include "dsv/utils.h"
 #include "dsv/visualizer.h"
 
 int main() {
