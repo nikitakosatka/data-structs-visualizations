@@ -18,16 +18,16 @@ private:
     Texture shadingTexture;
     Texture elementTexture;
     Texture infoTextTexture;
+    Texture wallTexture;
+    Texture elementsTextures[5];
     
     Animation backgroundAnimation;
     AnimatedSprite background;
     
-    Animation elementStaticAnimation;
-    Animation elementPushAnimation;
-    AnimatedSprite elements[MAX_ELEMENTS];
-    
     Sprite text;
     Sprite infoText;
+    Sprite wall;
+    Sprite elements[MAX_ELEMENTS];
     
     Sound click;
     SoundBuffer buffer;
@@ -115,6 +115,10 @@ public:
         
         window->draw(background);
         
+        for (int el = 0; el < elementsNum + 1; el++) {
+            window->draw(elements[el]);
+        }
+        
         if (isStarted) {
             start();
         } else if (isInfo) {
@@ -126,6 +130,8 @@ public:
             infoBtn.draw();
             nextBtn.draw();
         }
+        
+        window->draw(wall);
         
         window->display();
     }
@@ -140,6 +146,13 @@ public:
         bgTexture.loadFromFile(resourcePath() + "stack_background.png");
         textTexture.loadFromFile(resourcePath() + "stack_text.png");
         infoTextTexture.loadFromFile(resourcePath() + "stack_info_text.png");
+        wallTexture.loadFromFile(resourcePath() + "stack_wall.png");
+        
+        elementsTextures[0].loadFromFile(resourcePath() + "stack_red.png");
+        elementsTextures[1].loadFromFile(resourcePath() + "stack_green.png");
+        elementsTextures[2].loadFromFile(resourcePath() + "stack_yellow.png");
+        elementsTextures[3].loadFromFile(resourcePath() + "stack_blue.png");
+        elementsTextures[4].loadFromFile(resourcePath() + "stack_purple.png");
     }
     
     void createSprites() {
@@ -158,6 +171,9 @@ public:
         // Info text init
         infoText = Sprite(infoTextTexture);
         infoText.setPosition((WIDTH - infoTextTexture.getSize().x) / 2, (HEIGHT - infoTextTexture.getSize().y) / 2);
+        
+        // Wall init
+        wall = Sprite(wallTexture);
         
         // Buttons init
         startBtn = Button(window);
@@ -201,11 +217,12 @@ public:
             
             window->draw(background);
             window->draw(text);
+            window->draw(wall);
             
             startBtn.draw();
             infoBtn.draw();
             nextBtn.draw();
-                        
+            
             window->display();
         }
     }
