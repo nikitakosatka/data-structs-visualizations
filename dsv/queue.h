@@ -13,6 +13,7 @@ class Queue {
 private:
     RenderWindow *window;
     
+    bool isFirstRunning;
     bool isRunning = true;
     bool isStarted = false;
     bool isInfo = false;
@@ -29,7 +30,6 @@ private:
     Animation backgroundAnimation;
     AnimatedSprite background;
     
-    Animation shadingAnimationEnd;
     Animation shadingAnimation;
     AnimatedSprite shading;
     
@@ -52,12 +52,13 @@ private:
     Button pushBtn;
     Button popBtn;
     Button peekBtn;
-    Button arrowsBtn;
     Button xBtn;
 
 public:
-    Queue(RenderWindow *window) {
+    Queue(RenderWindow *window, bool isFirstRunning = false) {
         this->window = window;
+        
+        this->isFirstRunning = isFirstRunning;
         
         loadTextures();
         createSprites();
@@ -68,7 +69,9 @@ public:
     Queue() = default; // Default constructor
     
     void run() {
-        begin();
+        if (isFirstRunning) {
+            begin();
+        }
         
         while (window->isOpen() && isRunning) {
             events();
@@ -116,10 +119,6 @@ public:
                         isRunning = false;
                     }
                 }
-            }
-            
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Escape) {
-                window->close();
             }
         }
     }
@@ -186,11 +185,6 @@ public:
         shadingAnimation.setSpriteSheet(shadingTexture);
         for (int frame = 0; frame < 5; frame++) {
             shadingAnimation.addFrame(IntRect(0, frame * HEIGHT, WIDTH, HEIGHT));
-        }
-        
-        shadingAnimationEnd.setSpriteSheet(shadingTexture);
-        for (int frame = 0; frame < 5; frame++) {
-            shadingAnimationEnd.addFrame(IntRect(0, (4 - frame) * HEIGHT, WIDTH, HEIGHT));
         }
         
         shading = AnimatedSprite(seconds(0.1), true, false);
@@ -266,6 +260,28 @@ public:
             shading.play(shadingAnimation);
             shading.update(frameTime);
             
+            window->draw(background);
+            window->draw(text);
+            
+            startBtn.draw();
+            infoBtn.draw();
+            nextBtn.draw();
+            
+            window->draw(shading);
+            
+            window->display();
+        }
+    }
+    
+    void next() {
+        for (int frame = 0; frame < 5; frame++) {
+            events();
+            window->clear();
+            
+            Time frameTime = frameClock.restart();
+            
+            background.play(backgroundAnimation);
+            background.update(frameTime);
             window->draw(background);
             window->draw(text);
             
@@ -395,34 +411,6 @@ public:
             }
             
             window->draw(wall);
-            
-            window->display();
-        }
-    }
-    
-    void next() {
-        shading = AnimatedSprite(seconds(0.1), true, false);
-        
-        for (int frame = 0; frame < 30; frame++) {
-            events();
-            window->clear();
-            
-            Time frameTime = frameClock.restart();
-            
-            background.play(backgroundAnimation);
-            background.update(frameTime);
-            
-            shading.play(shadingAnimationEnd);
-            shading.update(frameTime);
-            
-            window->draw(background);
-            window->draw(text);
-            
-            startBtn.draw();
-            infoBtn.draw();
-            nextBtn.draw();
-            
-            window->draw(shading);
             
             window->display();
         }
