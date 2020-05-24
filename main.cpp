@@ -1,6 +1,8 @@
 #include "dsv/visualizer.h"
 
 int main() {
+    srand(time(NULL));
+    
     RenderWindow window(VideoMode(WIDTH, HEIGHT), "Data Structs");
     window.setFramerateLimit(FRAMERATE);
 

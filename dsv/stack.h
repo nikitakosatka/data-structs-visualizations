@@ -240,7 +240,46 @@ public:
     }
     
     void push() {
+        isAnimation = true;
         
+        if (elementsNum < MAX_ELEMENTS) {
+            elementsNum++;
+            elements[elementsNum] = Sprite(elementsTextures[rand() % 5]); // set random texture
+            
+            if (rand() % 2 == 0) { // randomly flip image
+                elements[elementsNum].setOrigin({elements[elementsNum].getLocalBounds().width, 0});
+                elements[elementsNum].setScale({-1, 1});
+            }
+            
+            int x = 640 + rand() % (elements[elementsNum].getTexture()->getSize().y * 2 + 1) -
+                elements[elementsNum].getTexture()->getSize().y; // set random x
+            
+            for (int y = 0; y < 660 - elementsNum * elements[elementsNum].getTexture()->getSize().y; y += 12) {
+                events();
+                window->clear();
+                
+                Time frameTime = frameClock.restart();
+                
+                background.play(backgroundAnimation);
+                background.update(frameTime);
+                
+                elements[elementsNum].setPosition(x, y);
+                
+                window->draw(background);
+                
+                for (int el = 0; el < elementsNum + 1; el++) {
+                    window->draw(elements[el]);
+                }
+                
+                start(); // draw buttons
+                
+                window->draw(wall);
+                
+                window->display();
+            }
+        }
+        
+        isAnimation = false;
     }
     
     void pop() {
