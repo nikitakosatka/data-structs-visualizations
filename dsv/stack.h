@@ -283,7 +283,37 @@ public:
     }
     
     void pop() {
+        isAnimation = true;
         
+        if (elementsNum > 0) {
+            elementsNum--;
+            
+            for (int y = 660 - (elementsNum + 1) * elements[elementsNum].getTexture()->getSize().y; y > 0; y -= 12) {
+                events();
+                window->clear();
+                
+                Time frameTime = frameClock.restart();
+                
+                background.play(backgroundAnimation);
+                background.update(frameTime);
+                
+                elements[elementsNum + 1].setPosition(elements[elementsNum + 1].getPosition().x, y);
+                
+                window->draw(background);
+                
+                for (int el = 0; el < elementsNum + 2; el++) {
+                    window->draw(elements[el]);
+                }
+                
+                start(); // draw buttons
+                
+                window->draw(wall);
+                
+                window->display();
+            }
+        }
+        
+        isAnimation = false;
     }
     
     void peek() {
