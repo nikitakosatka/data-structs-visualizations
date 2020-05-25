@@ -15,7 +15,6 @@ private:
     
     Texture bgTexture;
     Texture textTexture;
-    Texture shadingTexture;
     Texture elementTexture;
     Texture infoTextTexture;
     Texture wallTexture;
@@ -142,7 +141,6 @@ public:
     }
     
     void loadTextures() {
-        shadingTexture.loadFromFile(resourcePath() + "shading.png");
         bgTexture.loadFromFile(resourcePath() + "stack_background.png");
         textTexture.loadFromFile(resourcePath() + "stack_text.png");
         infoTextTexture.loadFromFile(resourcePath() + "stack_info_text.png");
