@@ -148,6 +148,7 @@ public:
         infoTextTexture.loadFromFile(resourcePath() + "stack_info_text.png");
         wallTexture.loadFromFile(resourcePath() + "stack_wall.png");
         
+        // Load books textures
         elementsTextures[0].loadFromFile(resourcePath() + "stack_red.png");
         elementsTextures[1].loadFromFile(resourcePath() + "stack_green.png");
         elementsTextures[2].loadFromFile(resourcePath() + "stack_yellow.png");
@@ -244,17 +245,19 @@ public:
         
         if (elementsNum < MAX_ELEMENTS) {
             elementsNum++;
+            
             elements[elementsNum] = Sprite(elementsTextures[rand() % 5]); // set random texture
+            
+            int elementHeight = elements[elementsNum].getTexture()->getSize().y;
             
             if (rand() % 2 == 0) { // randomly flip image
                 elements[elementsNum].setOrigin({elements[elementsNum].getLocalBounds().width, 0});
                 elements[elementsNum].setScale({-1, 1});
             }
             
-            int x = 640 + rand() % (elements[elementsNum].getTexture()->getSize().y * 2 + 1) -
-                elements[elementsNum].getTexture()->getSize().y; // set random x
+            int x = 640 + rand() % (elementHeight * 2 + 1) - elementHeight; // set random x
             
-            for (int y = 0; y < 660 - elementsNum * elements[elementsNum].getTexture()->getSize().y; y += 12) {
+            for (int y = 0; y < 660 - elementHeight * elementsNum; y += elementHeight / 2) {
                 events();
                 window->clear();
                 
@@ -283,12 +286,14 @@ public:
     }
     
     void pop() {
+        int elementHeight = elements[elementsNum].getTexture()->getSize().y;
+        
         isAnimation = true;
         
         if (elementsNum > 0) {
             elementsNum--;
             
-            for (int y = 660 - (elementsNum + 1) * 24; y > 0; y -= 12) {
+            for (int y = 660 - (elementsNum + 1) * elementHeight; y > 0; y -= elementHeight / 2) {
                 events();
                 window->clear();
                 
