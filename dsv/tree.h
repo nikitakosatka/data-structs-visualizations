@@ -131,8 +131,11 @@ public:
     }
     
     void loadSounds() {
-        buffer.loadFromFile(resourcePath() + "click.wav");
-        click.setBuffer(buffer);
+        clickBuffer.loadFromFile(resourcePath() + "click.wav");
+        click.setBuffer(clickBuffer);
+        
+        grassBuffer.loadFromFile(resourcePath() + "grass.wav");
+        grass.setBuffer(grassBuffer);
     }
     
     void loadTextures() {
