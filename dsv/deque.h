@@ -17,13 +17,20 @@ private:
     Texture textTexture;
     Texture elementTexture;
     Texture infoTextTexture;
+    Texture wallTexture;
+    Texture backTexture;
+    Texture frontTexture;
     
     Animation backgroundAnimation;
     AnimatedSprite background;
     
     Sprite text;
     Sprite infoText;
-    Sprite elements[MAX_ELEMENTS];
+    Sprite wall;
+    Sprite back;
+    Sprite front;
+    Sprite elementsBack[MAX_ELEMENTS / 2];
+    Sprite elementsFront[MAX_ELEMENTS / 2];
     
     Sound click;
     SoundBuffer buffer;
@@ -157,6 +164,17 @@ public:
         // Info text init
         infoText = Sprite(infoTextTexture);
         infoText.setPosition((WIDTH - infoTextTexture.getSize().x) / 2, (HEIGHT - infoTextTexture.getSize().y) / 2);
+        
+        // Wall image init
+        wall = Sprite(wallTexture);
+        wall.setPosition(0, 354);
+        
+        // Back and Front titles init
+        back = Sprite(backTexture);
+        back.setPosition(WIDTH / 3 * 2 - 40, 50);
+        
+        front = Sprite(frontTexture);
+        front.setPosition(WIDTH / 3 * 2 - 40, 150);
         
         // Buttons init
         startBtn = Button(window);
