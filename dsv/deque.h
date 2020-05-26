@@ -144,7 +144,7 @@ public:
     void createSprites() {
         // Background init
         backgroundAnimation.setSpriteSheet(bgTexture);
-        for (int frame = 0; frame < 5; frame++) {
+        for (int frame = 0; frame < 10; frame++) {
             backgroundAnimation.addFrame(IntRect(0, frame * HEIGHT, WIDTH, HEIGHT));
         }
         
