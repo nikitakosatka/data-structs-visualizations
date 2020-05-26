@@ -284,7 +284,9 @@ public:
     }
     
     void pop() {
-        
+        if (elementsNum >= 0) {
+            elementsNum--;
+        }
     }
     
     void peek() {
