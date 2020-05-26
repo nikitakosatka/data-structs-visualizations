@@ -269,10 +269,6 @@ public:
             
             elementsValues[elementsNum] = rand() % MAX_ELEMENTS_TREE + 1;
             
-            for (int el = 0; el <= elementsNum; el++) {
-                cout << elementsValues[el] << " ";
-            } cout << endl;
-            
             if (elementsNum == 0) {
                 int x = (WIDTH - rootTexture.getSize().x) / 2;
                 int y = HEIGHT - rootTexture.getSize().y;
