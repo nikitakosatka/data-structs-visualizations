@@ -16,7 +16,7 @@ private:
     bool isAnimation = false;
     
     int elementsNum = -1;
-    int elementsValues[MAX_ELEMENTS_TREE];
+    int elementsValues[MAX_BRANCHES];
     
     Texture bgTexture;
     Texture textTexture;
@@ -35,6 +35,7 @@ private:
     
     Sprite text;
     Sprite infoText;
+    Sprite leaves;
     Sprite branches[MAX_BRANCHES];
     Sprite elements[MAX_BRANCHES][MAX_ELEMENTS_TREE];
     
@@ -128,10 +129,16 @@ public:
         
         for (int branch = 0; branch < elementsNum + 1; branch++) {
             window->draw(branches[branch]);
-            
-            for (int el = 0; el < elementsValues[elementsNum]; el++) {
+        }
+        
+        for (int branch = 0; branch < elementsNum + 1; branch++) {
+            for (int el = 0; el < elementsValues[branch]; el++) {
                 window->draw(elements[branch][el]);
             }
+        }
+        
+        if (elementsNum >= 0) {
+            window->draw(leaves);
         }
         
         if (isStarted) {
@@ -188,6 +195,10 @@ public:
         // Info text init
         infoText = Sprite(infoTextTexture);
         infoText.setPosition((WIDTH - infoTextTexture.getSize().x) / 2, (HEIGHT - infoTextTexture.getSize().y) / 2);
+        
+        // Leaves image init
+        leaves = Sprite(leavesTexture);
+        leaves.setPosition((WIDTH - leavesTexture.getSize().x) / 2, 50);
         
         // Buttons init
         startBtn = Button(window);
@@ -256,14 +267,18 @@ public:
         if (elementsNum < MAX_BRANCHES) {
             elementsNum++;
             
+            elementsValues[elementsNum] = rand() % MAX_ELEMENTS_TREE + 1;
+            
+            for (int el = 0; el <= elementsNum; el++) {
+                cout << elementsValues[el] << " ";
+            } cout << endl;
+            
             if (elementsNum == 0) {
                 int x = (WIDTH - rootTexture.getSize().x) / 2;
                 int y = HEIGHT - rootTexture.getSize().y;
                 
                 branches[elementsNum] = Sprite(rootTexture);
                 branches[elementsNum].setPosition(x, y);
-                
-                elementsValues[elementsNum] = rand() % MAX_ELEMENTS_TREE + 1;
                 
                 for (int el = 0; el < elementsValues[elementsNum]; el++) {
                     int elementX = (WIDTH - elementTexture.getSize().x) / 2;
@@ -273,13 +288,97 @@ public:
                     elements[elementsNum][el].setPosition(elementX, elementY);
                     elements[elementsNum][el].rotate(-(el - 3) * 30);
                 }
+            // костылетрон
             } else {
-                elementsValues[elementsNum] = rand() % MAX_ELEMENTS_TREE + 1;
-                
-                if (elementsValues[elementsNum] < elementsValues[elementsNum - 1]) {
-                    
+                if (elementsNum == 1) {
+                    firstLevel();
+                } else if (elementsNum == 2) {
+                    if (elementsValues[elementsNum - 1] >= elementsValues[0] && elementsValues[2] < elementsValues[0]) {
+                        firstLevel();
+                    } else {
+                        secondLevel();
+                    }
+                } else if (elementsNum == 3) {
+                    if ((elementsValues[1] >= elementsValues[0] && elementsValues[2] >= elementsValues[0]) ||
+                        (elementsValues[1] < elementsValues[0] && elementsValues[2] < elementsValues[0])) {
+                        firstLevel();
+                    } else if ((elementsValues[2] >= elementsValues[0] && elementsValues[1] < elementsValues[0]) ||
+                               (elementsValues[1] >= elementsValues[0] && elementsValues[2] < elementsValues[0])) {
+                        secondLevel();
+                    }
                 }
             }
+        }
+    }
+    
+    void firstLevel() {
+        int elementX;
+        int elementY;
+        
+        branches[elementsNum] = Sprite(firstTexture);
+        
+        if (elementsValues[elementsNum] < elementsValues[0]) {
+            elementX = 350;
+            elementY = 450;
+            
+            branches[elementsNum].setPosition(elementX, elementY);
+            branches[elementsNum].setOrigin({branches[elementsNum].getLocalBounds().width, 0});
+            branches[elementsNum].setScale({-1, 1});
+        } else {
+            elementX = 650;
+            elementY = 480;
+            branches[elementsNum].setPosition(elementX, elementY);
+            
+            elementX += branches[elementsNum].getTexture()->getSize().x;
+        }
+        
+        for (int el = 0; el < elementsValues[elementsNum]; el++) {
+            elements[elementsNum][el] = Sprite(elementTexture);
+            elements[elementsNum][el].setPosition(elementX, elementY);
+            elements[elementsNum][el].rotate(-(el - 3) * 30);
+        }
+    }
+    
+    void secondLevel() {
+        int elementX;
+        int elementY;
+        
+        if (elementsValues[elementsNum - 1] >= elementsValues[elementsNum - 2]) {
+            if (elementsValues[elementsNum] >= elementsValues[elementsNum - 1]) {
+                elementX = 1050;
+                elementY = 430;
+                
+                branches[elementsNum] = Sprite(secondEdgeTexture);
+                branches[elementsNum].setPosition(850, 430);
+            } else {
+                elementX = 850;
+                elementY = 420;
+                
+                branches[elementsNum] = Sprite(secondTexture);
+                branches[elementsNum].setPosition(850, 420);
+            }
+        } else {
+            if (elementsValues[elementsNum] >= elementsValues[elementsNum - 1]) {
+                elementX = 350;
+                elementY = 370;
+                
+                branches[elementsNum] = Sprite(secondTexture);
+                branches[elementsNum].setPosition(350, 370);
+            } else {
+                elementX = 350;
+                elementY = 430;
+                
+                branches[elementsNum] = Sprite(secondEdgeTexture);
+                branches[elementsNum].setPosition(350, 430);
+                branches[elementsNum].setOrigin({branches[elementsNum].getLocalBounds().width, 0});
+                branches[elementsNum].setScale({-1, 1});
+            }
+        }
+        
+        for (int el = 0; el < elementsValues[elementsNum]; el++) {
+            elements[elementsNum][el] = Sprite(elementTexture);
+            elements[elementsNum][el].setPosition(elementX, elementY);
+            elements[elementsNum][el].rotate(-(el - 3) * 30);
         }
     }
     
@@ -307,11 +406,17 @@ public:
                     
                     for (int branch = 0; branch < elementsNum + 1; branch++) {
                         window->draw(branches[branch]);
-                        
-                        for (int el = 0; el < elementsValues[elementsNum]; el++) {
+                    }
+                    
+                    for (int branch = 0; branch < elementsNum + 1; branch++) {
+                        for (int el = 0; el < elementsValues[branch]; el++) {
                             window->draw(elements[branch][el]);
                         }
                     }
+                }
+                
+                if (elementsNum >= 0) {
+                    window->draw(leaves);
                 }
                 
                 start(); // draw buttons
