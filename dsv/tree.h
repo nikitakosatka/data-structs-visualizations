@@ -290,7 +290,35 @@ public:
     }
     
     void peek() {
-        
+        if (elementsNum >= 0) {
+            for (int frame = 0; frame < 20; frame += 1) {
+                events();
+                window->clear();
+                
+                Time frameTime = frameClock.restart();
+                
+                background.play(backgroundAnimation);
+                background.update(frameTime);
+                                
+                window->draw(background);
+                
+                for (int el = 0; el < elementsValues[0]; el++) {
+                    elements[0][el].rotate(5);
+                    
+                    for (int branch = 0; branch < elementsNum + 1; branch++) {
+                        window->draw(branches[branch]);
+                        
+                        for (int el = 0; el < elementsValues[elementsNum]; el++) {
+                            window->draw(elements[branch][el]);
+                        }
+                    }
+                }
+                
+                start(); // draw buttons
+                
+                window->display();
+            }
+        }
     }
 };
 
