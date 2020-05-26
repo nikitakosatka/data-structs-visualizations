@@ -3,6 +3,9 @@
 
 #include "utils.h"
 
+#define MAX_BRANCHES 15
+#define MAX_ELEMENTS_TREE 5
+
 class Tree {
 private:
     RenderWindow *window;
@@ -11,22 +14,34 @@ private:
     bool isStarted = false;
     bool isInfo = false;
     bool isAnimation = false;
-    int elementsNum = 0;
+    
+    int elementsNum = -1;
+    int elementsValues[MAX_ELEMENTS_TREE];
     
     Texture bgTexture;
     Texture textTexture;
     Texture elementTexture;
     Texture infoTextTexture;
     
+    Texture leavesTexture;
+    Texture rootTexture;
+    Texture firstTexture;
+    Texture secondTexture;
+    Texture secondEdgeTexture;
+    Texture thirdTexture;
+    
     Animation backgroundAnimation;
     AnimatedSprite background;
     
     Sprite text;
     Sprite infoText;
-    Sprite elements[MAX_ELEMENTS];
+    Sprite branches[MAX_BRANCHES];
+    Sprite elements[MAX_BRANCHES][MAX_ELEMENTS_TREE];
     
     Sound click;
-    SoundBuffer buffer;
+    Sound grass;
+    SoundBuffer clickBuffer;
+    SoundBuffer grassBuffer;
     
     Clock frameClock;
     
@@ -70,10 +85,10 @@ public:
                         click.play();
                         isStarted = false;
                     } else if (pushBtn.isContainMousePos()) {
-                        click.play();
+                        grass.play();
                         (!isAnimation) ? push() : pass; // if animation doesn't occur, push, else do nothing
                     } else if (popBtn.isContainMousePos()) {
-                        click.play();
+                        grass.play();
                         (!isAnimation) ? pop() : pass; // if animation doesn't occur, pop, else do nothing
                     } else if (peekBtn.isContainMousePos()) {
                         click.play();
@@ -111,8 +126,12 @@ public:
         
         window->draw(background);
         
-        for (int el = 0; el < elementsNum + 1; el++) {
-            window->draw(elements[el]);
+        for (int branch = 0; branch < elementsNum + 1; branch++) {
+            window->draw(branches[branch]);
+            
+            for (int el = 0; el < elementsValues[elementsNum]; el++) {
+                window->draw(elements[branch][el]);
+            }
         }
         
         if (isStarted) {
@@ -142,6 +161,15 @@ public:
         bgTexture.loadFromFile(resourcePath() + "tree_background.png");
         textTexture.loadFromFile(resourcePath() + "tree_text.png");
         infoTextTexture.loadFromFile(resourcePath() + "tree_info_text.png");
+        elementTexture.loadFromFile(resourcePath() + "tree_leaf.png");
+        
+        // Tree image textures
+        rootTexture.loadFromFile(resourcePath() + "tree_root.png");
+        leavesTexture.loadFromFile(resourcePath() + "tree_leaves.png");
+        firstTexture.loadFromFile(resourcePath() + "tree_first.png");
+        secondTexture.loadFromFile(resourcePath() + "tree_second.png");
+        secondEdgeTexture.loadFromFile(resourcePath() + "tree_second_edge.png");
+        thirdTexture.loadFromFile(resourcePath() + "tree_third.png");
     }
     
     void createSprites() {
@@ -225,7 +253,34 @@ public:
     }
     
     void push() {
-        
+        if (elementsNum < MAX_BRANCHES) {
+            elementsNum++;
+            
+            if (elementsNum == 0) {
+                int x = (WIDTH - rootTexture.getSize().x) / 2;
+                int y = HEIGHT - rootTexture.getSize().y;
+                
+                branches[elementsNum] = Sprite(rootTexture);
+                branches[elementsNum].setPosition(x, y);
+                
+                elementsValues[elementsNum] = rand() % MAX_ELEMENTS_TREE + 1;
+                
+                for (int el = 0; el < elementsValues[elementsNum]; el++) {
+                    int elementX = (WIDTH - elementTexture.getSize().x) / 2;
+                    int elementY = HEIGHT - elementTexture.getSize().y * 2;
+                    
+                    elements[elementsNum][el] = Sprite(elementTexture);
+                    elements[elementsNum][el].setPosition(elementX, elementY);
+                    elements[elementsNum][el].rotate(-(el - 3) * 30);
+                }
+            } else {
+                elementsValues[elementsNum] = rand() % MAX_ELEMENTS_TREE + 1;
+                
+                if (elementsValues[elementsNum] < elementsValues[elementsNum - 1]) {
+                    
+                }
+            }
+        }
     }
     
     void pop() {
