@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "queue.h"
 #include "stack.h"
+#include "deque.h"
 #include "tree.h"
 
 class Visualizer {
@@ -37,6 +38,7 @@ private:
     
     Queue *queue;
     Stack *stack;
+    Deque *deque;
     Tree *tree;
     
 public:
@@ -87,6 +89,10 @@ public:
         stack = new Stack(window);
         stack->run();
         delete stack;
+        
+        deque = new Deque(window);
+        deque->run();
+        delete deque;
         
         tree = new Tree(window);
         tree->run();
