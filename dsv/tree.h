@@ -311,6 +311,7 @@ public:
         }
     }
     
+    // реальный костылетрон
     void firstLevel() {
         int elementX;
         int elementY;
@@ -339,6 +340,7 @@ public:
         }
     }
     
+    // самый реальный костылетрон
     void secondLevel() {
         int elementX;
         int elementY;
@@ -349,13 +351,13 @@ public:
                 elementY = 430;
                 
                 branches[elementsNum] = Sprite(secondEdgeTexture);
-                branches[elementsNum].setPosition(850, 430);
+                branches[elementsNum].setPosition(elementX - 200, elementY);
             } else {
                 elementX = 850;
                 elementY = 420;
                 
                 branches[elementsNum] = Sprite(secondTexture);
-                branches[elementsNum].setPosition(850, 420);
+                branches[elementsNum].setPosition(elementX, elementY);
             }
         } else {
             if (elementsValues[elementsNum] >= elementsValues[elementsNum - 1]) {
@@ -363,13 +365,13 @@ public:
                 elementY = 370;
                 
                 branches[elementsNum] = Sprite(secondTexture);
-                branches[elementsNum].setPosition(350, 370);
+                branches[elementsNum].setPosition(elementX, elementY);
             } else {
                 elementX = 350;
                 elementY = 430;
                 
                 branches[elementsNum] = Sprite(secondEdgeTexture);
-                branches[elementsNum].setPosition(350, 430);
+                branches[elementsNum].setPosition(elementX, elementY);
                 branches[elementsNum].setOrigin({branches[elementsNum].getLocalBounds().width, 0});
                 branches[elementsNum].setScale({-1, 1});
             }
