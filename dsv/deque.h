@@ -33,8 +33,6 @@ private:
     Sprite text;
     Sprite infoText;
     Sprite wall;
-    Sprite back;
-    Sprite front;
     AnimatedSprite elementsBack[MAX_ELEMENTS / 2];
     AnimatedSprite elementsFront[MAX_ELEMENTS / 2];
     
@@ -50,6 +48,8 @@ private:
     Button pushFrontBtn;
     Button popBackBtn;
     Button popFrontBtn;
+    Button peekBackBtn;
+    Button peekFrontBtn;
     Button xBtn;
     
 public:
@@ -95,7 +95,15 @@ public:
                     } else if (popFrontBtn.isContainMousePos()) {
                         click.play();
                         (!isAnimation) ? popFront() : pass; // if animation doesn't occur, pop, else do nothing
+                        
+                    } else if (peekBackBtn.isContainMousePos()) {
+                        click.play();
+                        (!isAnimation) ? peekBack() : pass;
+                    } else if (peekFrontBtn.isContainMousePos()) {
+                        click.play();
+                        (!isAnimation) ? peekFront() : pass;
                     }
+
                 } else if (isInfo) {
                     if (xBtn.isContainMousePos()) {
                         click.play();
@@ -203,14 +211,15 @@ public:
         wall = Sprite(wallTexture);
         wall.setPosition(0, 354);
         
-        // Back and Front titles init
-        back = Sprite(backTexture);
-        back.setPosition(WIDTH / 3 * 2 - 40, 50);
-        
-        front = Sprite(frontTexture);
-        front.setPosition(WIDTH / 3 * 2 - 40, 150);
-        
         // Buttons init
+        peekBackBtn = Button(window);
+        peekBackBtn.loadTexture(resourcePath() + "deque_back.png");
+        peekBackBtn.setPosition(WIDTH / 3 * 2 - 40, 50);
+        
+        peekFrontBtn = Button(window);
+        peekFrontBtn.loadTexture(resourcePath() + "deque_front.png");
+        peekFrontBtn.setPosition(WIDTH / 3 * 2 - 40, 150);
+        
         startBtn = Button(window);
         startBtn.loadTexture(resourcePath() + "deque_start.png");
         startBtn.setPosition((WIDTH - startBtn.getTexture().getSize().x) / 2, 350);
@@ -271,9 +280,8 @@ public:
         pushBackBtn.draw();
         popFrontBtn.draw();
         pushFrontBtn.draw();
-        
-        window->draw(back);
-        window->draw(front);
+        peekBackBtn.draw();
+        peekFrontBtn.draw();
         
         xBtn.draw();
     }
@@ -455,6 +463,81 @@ public:
         }
         
         isAnimation = false;
+    }
+    
+    void peekBack() {
+        for (int frame = 0; frame < 30; frame++) {
+            events();
+            window->clear();
+            
+            Time frameTime = frameClock.restart();
+            
+            background.play(backgroundAnimation);
+            background.update(frameTime);
+            
+            window->draw(background);
+            
+            start(); // draw buttons
+            
+            for (int el = elementsFrontNum; el > 0; el--) {
+                elementsFront[el].play(elementAnimation);
+                elementsFront[el].update(frameTime);
+                
+                window->draw(elementsFront[el]);
+            }
+            
+            for (int el = 0; el < elementsBackNum + 1; el++) {
+                if (el == elementsBackNum) {
+                    elementsBack[el].play(elementPeekAnimation);
+                } else {
+                    elementsBack[el].play(elementAnimation);
+                }
+                elementsBack[el].update(frameTime);
+                
+                window->draw(elementsBack[el]);
+            }
+            
+            window->draw(wall);
+            
+            window->display();
+        }
+    }
+    
+    void peekFront() {
+        for (int frame = 0; frame < 30; frame++) {
+            events();
+            window->clear();
+            
+            Time frameTime = frameClock.restart();
+            
+            background.play(backgroundAnimation);
+            background.update(frameTime);
+            
+            window->draw(background);
+            
+            start(); // draw buttons
+            
+            for (int el = elementsFrontNum; el > 0; el--) {
+                if (el == elementsFrontNum) {
+                    elementsFront[el].play(elementPeekAnimation);
+                } else {
+                    elementsFront[el].play(elementAnimation);
+                }
+                elementsFront[el].update(frameTime);
+                
+                window->draw(elementsFront[el]);
+            }
+            
+            for (int el = 0; el < elementsBackNum + 1; el++) {
+                elementsBack[el].update(frameTime);
+                
+                window->draw(elementsBack[el]);
+            }
+            
+            window->draw(wall);
+            
+            window->display();
+        }
     }
 };
 
