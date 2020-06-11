@@ -24,6 +24,9 @@ private:
     Texture backTexture;
     Texture frontTexture;
     
+    Animation elementAnimation;
+    Animation elementPeekAnimation;
+    
     Animation backgroundAnimation;
     AnimatedSprite background;
     
@@ -32,8 +35,8 @@ private:
     Sprite wall;
     Sprite back;
     Sprite front;
-    Sprite elementsBack[MAX_ELEMENTS / 2];
-    Sprite elementsFront[MAX_ELEMENTS / 2];
+    AnimatedSprite elementsBack[MAX_ELEMENTS / 2];
+    AnimatedSprite elementsFront[MAX_ELEMENTS / 2];
     
     Sound click;
     SoundBuffer buffer;
@@ -126,10 +129,16 @@ public:
         window->draw(background);
         
         for (int el = elementsFrontNum; el > 0; el--) {
+            elementsFront[el].play(elementAnimation);
+            elementsFront[el].update(frameTime);
+            
             window->draw(elementsFront[el]);
         }
         
         for (int el = 0; el < elementsBackNum + 1; el++) {
+            elementsBack[el].play(elementAnimation);
+            elementsBack[el].update(frameTime);
+            
             window->draw(elementsBack[el]);
         }
         
@@ -173,6 +182,14 @@ public:
         }
         
         background = AnimatedSprite(seconds(0.1), true, true);
+        
+        // Element Animation init
+        elementAnimation.setSpriteSheet(elementTexture);
+        elementAnimation.addFrame(IntRect(0, 0, elementTexture.getSize().x, elementTexture.getSize().y / 2));
+        
+        elementPeekAnimation.setSpriteSheet(elementTexture);
+        elementPeekAnimation.addFrame(IntRect(0, elementTexture.getSize().y / 2,
+                                          elementTexture.getSize().x, elementTexture.getSize().y / 2));
         
         // Title text init
         text = Sprite(textTexture);
@@ -272,7 +289,7 @@ public:
         if (elementsBackNum < MAX_ELEMENTS_DEQUE) {
             elementsBackNum++;
         
-            elementsBack[elementsBackNum] = Sprite(elementTexture);
+            elementsBack[elementsBackNum] = AnimatedSprite(seconds(0.1), true, true);
             
             for (int x = 0; x < 560 - (elementTexture.getSize().x - 42) * elementsBackNum; x += 4) {
                 events();
@@ -290,10 +307,16 @@ public:
                 start(); // draw buttons
                 
                 for (int el = elementsFrontNum; el > 0; el--) {
+                    elementsFront[el].play(elementAnimation);
+                    elementsFront[el].update(frameTime);
+                    
                     window->draw(elementsFront[el]);
                 }
                 
                 for (int el = 0; el < elementsBackNum + 1; el++) {
+                    elementsBack[el].play(elementAnimation);
+                    elementsBack[el].update(frameTime);
+                    
                     window->draw(elementsBack[el]);
                 }
                 
@@ -353,7 +376,7 @@ public:
             } else {
                 elementsFrontNum++;
                 
-                elementsFront[elementsFrontNum] = Sprite(elementTexture);
+                elementsFront[elementsFrontNum] = AnimatedSprite(seconds(0.1), true, true);
                 
                 for (int x = WIDTH; x > 560 + (elementTexture.getSize().x - 42) * elementsFrontNum; x -= 4) {
                     events();
@@ -371,10 +394,16 @@ public:
                     start(); // draw buttons
                     
                     for (int el = elementsFrontNum; el > 0; el--) {
+                        elementsFront[el].play(elementAnimation);
+                        elementsFront[el].update(frameTime);
+                        
                         window->draw(elementsFront[el]);
                     }
                     
                     for (int el = 0; el < elementsBackNum + 1; el++) {
+                        elementsBack[el].play(elementAnimation);
+                        elementsBack[el].update(frameTime);
+                        
                         window->draw(elementsBack[el]);
                     }
                     
