@@ -353,7 +353,7 @@ public:
         if (elementsNum > 0) {
             elementsNum--;
             
-            for (int x = ELEMENT_X; x > ELEMENT_X - 120 ; x -= 2) {
+            for (int x = ELEMENT_X; x > ELEMENT_X - 120; x -= 2) {
                 events();
                 window->clear();
                 
