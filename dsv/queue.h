@@ -35,6 +35,7 @@ private:
     
     Animation elementStayAnimation;
     Animation elementRunAnimation;
+    Animation elementPeekAnimation;
     AnimatedSprite elements[MAX_ELEMENTS];
     
     Sprite text;
@@ -192,13 +193,17 @@ public:
         // Elements init
         elementRunAnimation.setSpriteSheet(elementTexture);
         for (int frame = 0; frame < 4; frame++) {
-            elementRunAnimation.addFrame(IntRect(frame * elementTexture.getSize().x / 4, 0,
-                                                 elementTexture.getSize().x / 4, elementTexture.getSize().y));
+            elementRunAnimation.addFrame(IntRect(frame * elementTexture.getSize().x / 5, 0,
+                                                 elementTexture.getSize().x / 5, elementTexture.getSize().y));
         }
         
         elementStayAnimation.setSpriteSheet(elementTexture);
         elementStayAnimation.addFrame(IntRect(0, 0,
-                                              elementTexture.getSize().x / 4, elementTexture.getSize().y));
+                                              elementTexture.getSize().x / 5, elementTexture.getSize().y));
+        
+        elementPeekAnimation.setSpriteSheet(elementTexture);
+        elementPeekAnimation.addFrame(IntRect(elementTexture.getSize().x / 5 * 4, 0,
+                                              elementTexture.getSize().x / 5, elementTexture.getSize().y));
         
         for (int el = 0; el < MAX_ELEMENTS; el++) {
             elements[el] = AnimatedSprite(seconds(0.1), true, true);
@@ -401,7 +406,7 @@ public:
             
             for (int el = 0; el < elementsNum; el++) {
                 if (el == 0) {
-                    elements[el].play(elementRunAnimation);
+                    elements[el].play(elementPeekAnimation);
                 } else {
                     elements[el].play(elementStayAnimation);
                 }
