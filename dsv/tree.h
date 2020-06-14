@@ -289,14 +289,17 @@ public:
                 if (elementsNum == 1) {
                     firstLevel();
                 } else if (elementsNum == 2) {
-                    if (elementsValues[elementsNum - 1] >= elementsValues[0] && elementsValues[2] < elementsValues[0]) {
+                    if ((elementsValues[1] >= elementsValues[0] && elementsValues[2] < elementsValues[0]) ||
+                        (elementsValues[1] < elementsValues[0] && elementsValues[2] >= elementsValues[0])) {
                         firstLevel();
                     } else {
                         secondLevel();
                     }
                 } else if (elementsNum == 3) {
-                    if ((elementsValues[1] >= elementsValues[0] && elementsValues[2] >= elementsValues[0]) ||
-                        (elementsValues[1] < elementsValues[0] && elementsValues[2] < elementsValues[0])) {
+                    if ((elementsValues[1] >= elementsValues[0] && elementsValues[2] >= elementsValues[0] &&
+                         elementsValues[3] < elementsValues[0]) ||
+                        (elementsValues[1] < elementsValues[0] && elementsValues[2] < elementsValues[0] &&
+                         elementsValues[3] >= elementsValues[0])) {
                         firstLevel();
                     } else if ((elementsValues[2] >= elementsValues[0] && elementsValues[1] < elementsValues[0]) ||
                                (elementsValues[1] >= elementsValues[0] && elementsValues[2] < elementsValues[0])) {
