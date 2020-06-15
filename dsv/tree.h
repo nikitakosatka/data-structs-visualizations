@@ -366,8 +366,8 @@ public:
                 branches[elementsNum] = Sprite(secondTexture);
                 branches[elementsNum].setPosition(elementX, elementY);
             } else {
-                elementX = 350;
-                elementY = 430;
+                elementX = 140;
+                elementY = 400;
                 
                 branches[elementsNum] = Sprite(secondEdgeTexture);
                 branches[elementsNum].setPosition(elementX, elementY);
