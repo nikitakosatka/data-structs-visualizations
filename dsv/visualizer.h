@@ -7,6 +7,8 @@
 #include "deque.h"
 #include "tree.h"
 
+#include <filesystem>
+
 class Visualizer {
 private:
     RenderWindow *window;
@@ -57,8 +59,7 @@ public:
             events();
             update();
         }
-        
-        return EXIT_SUCCESS;
+
     }
     
     void events() {
@@ -126,11 +127,11 @@ public:
     
     void loadTextures() {
         Image icon;
-        
-        icon.loadFromFile(resourcePath() + "icon.png");
-        bgTexture.loadFromFile(resourcePath() + "main_background.png");
-        textTexture.loadFromFile(resourcePath() + "main_text.png");
-        pressSomewhereTexture.loadFromFile(resourcePath() + "press_somewhere_to_start.png");
+
+        icon.loadFromFile("data/images/icon.png");
+        bgTexture.loadFromFile("data/images/menu/main_background.png");
+        textTexture.loadFromFile("data/images/menu/main_text.png");
+        pressSomewhereTexture.loadFromFile("data/images/menu/press_somewhere_to_start.png");
         
         window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     }
@@ -272,7 +273,7 @@ public:
     }
     
     void playMusic() {
-        music.openFromFile(resourcePath() + "music.wav");
+        music.openFromFile("data/sounds/music.wav");
         music.setVolume(10);
         music.setLoop(true);
         music.play();

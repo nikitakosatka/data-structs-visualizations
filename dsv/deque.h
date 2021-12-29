@@ -168,18 +168,18 @@ public:
     }
     
     void loadSounds() {
-        buffer.loadFromFile(resourcePath() + "click.wav");
+        buffer.loadFromFile("data/sounds/click.wav");
         click.setBuffer(buffer);
     }
     
     void loadTextures() {
-        bgTexture.loadFromFile(resourcePath() + "deque_background.png");
-        textTexture.loadFromFile(resourcePath() + "deque_text.png");
-        infoTextTexture.loadFromFile(resourcePath() + "deque_info_text.png");
-        wallTexture.loadFromFile(resourcePath() + "deque_wall.png");
-        elementTexture.loadFromFile(resourcePath() + "deque_element.png");
-        backTexture.loadFromFile(resourcePath() + "deque_back.png");
-        frontTexture.loadFromFile(resourcePath() + "deque_front.png");
+        bgTexture.loadFromFile("data/images/deque/deque_background.png");
+        textTexture.loadFromFile("data/images/deque/deque_text.png");
+        infoTextTexture.loadFromFile("data/images/deque/deque_info_text.png");
+        wallTexture.loadFromFile("data/images/deque/deque_wall.png");
+        elementTexture.loadFromFile("data/images/deque/deque_element.png");
+        backTexture.loadFromFile("data/images/deque/deque_back.png");
+        frontTexture.loadFromFile("data/images/deque/deque_front.png");
     }
     
     void createSprites() {
@@ -213,43 +213,43 @@ public:
         
         // Buttons init
         peekBackBtn = Button(window);
-        peekBackBtn.loadTexture(resourcePath() + "deque_back.png");
+        peekBackBtn.loadTexture("data/images/deque/deque_back.png");
         peekBackBtn.setPosition(WIDTH / 3 * 2 - 40, 50);
         
         peekFrontBtn = Button(window);
-        peekFrontBtn.loadTexture(resourcePath() + "deque_front.png");
+        peekFrontBtn.loadTexture("data/images/deque/deque_front.png");
         peekFrontBtn.setPosition(WIDTH / 3 * 2 - 40, 150);
         
         startBtn = Button(window);
-        startBtn.loadTexture(resourcePath() + "deque_start.png");
+        startBtn.loadTexture("data/images/deque/deque_start.png");
         startBtn.setPosition((WIDTH - startBtn.getTexture().getSize().x) / 2, 350);
         
         infoBtn = Button(window);
-        infoBtn.loadTexture(resourcePath() + "deque_info.png");
+        infoBtn.loadTexture("data/images/deque/deque_info.png");
         infoBtn.setPosition((WIDTH - infoBtn.getTexture().getSize().x) / 2, 450);
         
         nextBtn = Button(window);
-        nextBtn.loadTexture(resourcePath() + "deque_next.png");
+        nextBtn.loadTexture("data/images/deque/deque_next.png");
         nextBtn.setPosition((WIDTH - nextBtn.getTexture().getSize().x) / 2, 550);
         
         popBackBtn = Button(window);
-        popBackBtn.loadTexture(resourcePath() + "deque_pop.png");
+        popBackBtn.loadTexture("data/images/deque/deque_pop.png");
         popBackBtn.setPosition((WIDTH / 3 / 2) - 45, 50);
         
         pushBackBtn = Button(window);
-        pushBackBtn.loadTexture(resourcePath() + "deque_push.png");
+        pushBackBtn.loadTexture("data/images/deque/deque_push.png");
         pushBackBtn.setPosition((WIDTH - pushBackBtn.getTexture().getSize().x) / 2, 50);
         
         popFrontBtn = Button(window);
-        popFrontBtn.loadTexture(resourcePath() + "deque_pop.png");
+        popFrontBtn.loadTexture("data/images/deque/deque_pop.png");
         popFrontBtn.setPosition((WIDTH / 3 / 2) - 45, 150);
         
         pushFrontBtn = Button(window);
-        pushFrontBtn.loadTexture(resourcePath() + "deque_push.png");
+        pushFrontBtn.loadTexture("data/images/deque/deque_push.png");
         pushFrontBtn.setPosition((WIDTH - pushFrontBtn.getTexture().getSize().x) / 2, 150);
         
         xBtn = Button(window);
-        xBtn.loadTexture(resourcePath() + "deque_x.png");
+        xBtn.loadTexture("data/images/deque/deque_x.png");
         xBtn.setPosition(50, 50);
     }
     

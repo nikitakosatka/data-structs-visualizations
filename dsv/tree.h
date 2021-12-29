@@ -157,26 +157,26 @@ public:
     }
     
     void loadSounds() {
-        clickBuffer.loadFromFile(resourcePath() + "click.wav");
+        clickBuffer.loadFromFile("data/sounds/click.wav");
         click.setBuffer(clickBuffer);
         
-        grassBuffer.loadFromFile(resourcePath() + "grass.wav");
+        grassBuffer.loadFromFile("data/sounds/grass.wav");
         grass.setBuffer(grassBuffer);
     }
     
     void loadTextures() {
-        bgTexture.loadFromFile(resourcePath() + "tree_background.png");
-        textTexture.loadFromFile(resourcePath() + "tree_text.png");
-        infoTextTexture.loadFromFile(resourcePath() + "tree_info_text.png");
-        elementTexture.loadFromFile(resourcePath() + "tree_leaf.png");
+        bgTexture.loadFromFile("data/images/tree/tree_background.png");
+        textTexture.loadFromFile("data/images/tree/tree_text.png");
+        infoTextTexture.loadFromFile("data/images/tree/tree_info_text.png");
+        elementTexture.loadFromFile("data/images/tree/tree_leaf.png");
         
         // Tree image textures
-        rootTexture.loadFromFile(resourcePath() + "tree_root.png");
-        leavesTexture.loadFromFile(resourcePath() + "tree_leaves.png");
-        firstTexture.loadFromFile(resourcePath() + "tree_first.png");
-        secondTexture.loadFromFile(resourcePath() + "tree_second.png");
-        secondEdgeTexture.loadFromFile(resourcePath() + "tree_second_edge.png");
-        thirdTexture.loadFromFile(resourcePath() + "tree_third.png");
+        rootTexture.loadFromFile("data/images/tree/tree_root.png");
+        leavesTexture.loadFromFile("data/images/tree/tree_leaves.png");
+        firstTexture.loadFromFile("data/images/tree/tree_first.png");
+        secondTexture.loadFromFile("data/images/tree/tree_second.png");
+        secondEdgeTexture.loadFromFile("data/images/tree/tree_second_edge.png");
+        thirdTexture.loadFromFile("data/images/tree/tree_third.png");
     }
     
     void createSprites() {
@@ -202,31 +202,31 @@ public:
         
         // Buttons init
         startBtn = Button(window);
-        startBtn.loadTexture(resourcePath() + "tree_start.png");
+        startBtn.loadTexture("data/images/tree/tree_start.png");
         startBtn.setPosition((WIDTH - startBtn.getTexture().getSize().x) / 2, 350);
         
         infoBtn = Button(window);
-        infoBtn.loadTexture(resourcePath() + "tree_info.png");
+        infoBtn.loadTexture("data/images/tree/tree_info.png");
         infoBtn.setPosition((WIDTH - infoBtn.getTexture().getSize().x) / 2, 450);
         
         nextBtn = Button(window);
-        nextBtn.loadTexture(resourcePath() + "tree_next.png");
+        nextBtn.loadTexture("data/images/tree/tree_next.png");
         nextBtn.setPosition((WIDTH - nextBtn.getTexture().getSize().x) / 2, 550);
         
         popBtn = Button(window);
-        popBtn.loadTexture(resourcePath() + "tree_pop.png");
+        popBtn.loadTexture("data/images/tree/tree_pop.png");
         popBtn.setPosition((WIDTH / 3 / 2) - 45, 50);
         
         pushBtn = Button(window);
-        pushBtn.loadTexture(resourcePath() + "tree_push.png");
+        pushBtn.loadTexture("data/images/tree/tree_push.png");
         pushBtn.setPosition((WIDTH - pushBtn.getTexture().getSize().x) / 2, 50);
         
         peekBtn = Button(window);
-        peekBtn.loadTexture(resourcePath() + "tree_peek.png");
+        peekBtn.loadTexture("data/images/tree/tree_peek.png");
         peekBtn.setPosition(WIDTH / 3 * 2 - 40, 50);
         
         xBtn = Button(window);
-        xBtn.loadTexture(resourcePath() + "tree_x.png");
+        xBtn.loadTexture("data/images/tree/tree_x.png");
         xBtn.setPosition(50, 50);
     }
     

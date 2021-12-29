@@ -5,7 +5,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-#include "ResourcePath.hpp"
 #include "AnimatedSprite/Animation.hpp"
 #include "AnimatedSprite/AnimatedSprite.hpp"
 

@@ -136,22 +136,22 @@ public:
     }
     
     void loadSounds() {
-        buffer.loadFromFile(resourcePath() + "click.wav");
+        buffer.loadFromFile("data/sounds/click.wav");
         click.setBuffer(buffer);
     }
     
     void loadTextures() {
-        bgTexture.loadFromFile(resourcePath() + "stack_background.png");
-        textTexture.loadFromFile(resourcePath() + "stack_text.png");
-        infoTextTexture.loadFromFile(resourcePath() + "stack_info_text.png");
-        wallTexture.loadFromFile(resourcePath() + "stack_wall.png");
+        bgTexture.loadFromFile("data/images/stack/stack_background.png");
+        textTexture.loadFromFile("data/images/stack/stack_text.png");
+        infoTextTexture.loadFromFile("data/images/stack/stack_info_text.png");
+        wallTexture.loadFromFile("data/images/stack/stack_wall.png");
         
         // Load books textures
-        elementsTextures[0].loadFromFile(resourcePath() + "stack_red.png");
-        elementsTextures[1].loadFromFile(resourcePath() + "stack_green.png");
-        elementsTextures[2].loadFromFile(resourcePath() + "stack_yellow.png");
-        elementsTextures[3].loadFromFile(resourcePath() + "stack_blue.png");
-        elementsTextures[4].loadFromFile(resourcePath() + "stack_purple.png");
+        elementsTextures[0].loadFromFile("data/images/stack/stack_red.png");
+        elementsTextures[1].loadFromFile("data/images/stack/stack_green.png");
+        elementsTextures[2].loadFromFile("data/images/stack/stack_yellow.png");
+        elementsTextures[3].loadFromFile("data/images/stack/stack_blue.png");
+        elementsTextures[4].loadFromFile("data/images/stack/stack_purple.png");
     }
     
     void createSprites() {
@@ -176,31 +176,31 @@ public:
         
         // Buttons init
         startBtn = Button(window);
-        startBtn.loadTexture(resourcePath() + "stack_start.png");
+        startBtn.loadTexture("data/images/stack/stack_start.png");
         startBtn.setPosition((WIDTH - startBtn.getTexture().getSize().x) / 2, 350);
         
         infoBtn = Button(window);
-        infoBtn.loadTexture(resourcePath() + "stack_info.png");
+        infoBtn.loadTexture("data/images/stack/stack_info.png");
         infoBtn.setPosition((WIDTH - infoBtn.getTexture().getSize().x) / 2, 450);
         
         nextBtn = Button(window);
-        nextBtn.loadTexture(resourcePath() + "stack_next.png");
+        nextBtn.loadTexture("data/images/stack/stack_next.png");
         nextBtn.setPosition((WIDTH - nextBtn.getTexture().getSize().x) / 2, 550);
         
         popBtn = Button(window);
-        popBtn.loadTexture(resourcePath() + "stack_pop.png");
+        popBtn.loadTexture("data/images/stack/stack_pop.png");
         popBtn.setPosition((WIDTH / 3 / 2) - 45, 50);
         
         pushBtn = Button(window);
-        pushBtn.loadTexture(resourcePath() + "stack_push.png");
+        pushBtn.loadTexture("data/images/stack/stack_push.png");
         pushBtn.setPosition((WIDTH - pushBtn.getTexture().getSize().x) / 2, 50);
         
         peekBtn = Button(window);
-        peekBtn.loadTexture(resourcePath() + "stack_peek.png");
+        peekBtn.loadTexture("data/images/stack/stack_peek.png");
         peekBtn.setPosition(WIDTH / 3 * 2 - 40, 50);
         
         xBtn = Button(window);
-        xBtn.loadTexture(resourcePath() + "stack_x.png");
+        xBtn.loadTexture("data/images/stack/stack_x.png");
         xBtn.setPosition(50, 50);
     }
     
