@@ -3,6 +3,7 @@ project(data_structs_visualisations)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
+set(CMAKE_MODULE_PATH "/Users/Home/SFML-2.2-osx-clang-universal/cmake/Modules" ${CMAKE_MODULE_PATH})
 
 find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
 
