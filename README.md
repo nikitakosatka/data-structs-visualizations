@@ -5,6 +5,8 @@
 - Дек
 - Бинарное дерево поиска
 
+![В общем](https://github.com/nikitakosatka/data-structs-visualizations/blob/master/data/images/general_view.gif?raw=true)
+
 ## Главное меню
 [visualizer.h](https://github.com/nikitakosatka/data-structs-visualizations/blob/master/dsv/visualizer.h) - основной класс визуализатора, главное меню
 
